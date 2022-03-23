@@ -1,3 +1,6 @@
+# Docker - DB
+data/
+
 # Logs
 logs
 *.log
