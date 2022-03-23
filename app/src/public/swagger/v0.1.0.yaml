@@ -1,0 +1,93 @@
+---
+openapi: 3.0.0
+
+info:
+  title: dev-portfolio
+  description: Open API by 'dev-portfolio'
+  version: 0.1.0
+  license:
+    name: MIT
+    url: https://github.com/jisu3817/dev-portfolio-test/blob/master/LICENSE
+  # termsOfService: http://example.com/terms/
+  # contact:
+  #   name: API Support
+  #   url: http://www.example.com/support
+  #   email: support@example.com
+
+servers:
+  - url: http://localhost:3000/api/0.1.0
+    description: Open API v0.1.0 
+
+tags: 
+  - name: Tech
+    description: "Open API about tech"
+    # externalDocs:
+    #   description: "Find out more"
+    #   url: "http://swagger.io"
+
+paths:
+  /tech-stack:
+    get:
+      tags:
+        - Tech
+      summary: Get Tech-stack's info.
+      description: Get Tech-stack's informations by using the query of your 'keyword'.
+      parameters:
+        - name: keyword
+          minLength: 1
+          in: query
+          description: This is the keyword you inputted in order to find out the tech-stack's info.
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: javascript
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/responses/200'
+        400:
+          # CASE 1: There isn't the query called 'keyword' in URI.
+          # CASE 2: The query called 'keyword' is less than 1 in length.
+          description: Bad Request 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Error'
+        Other Cases:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Error'
+
+components:
+  responses:
+    200:
+      type: object
+      properties:
+        techName:
+          type: string
+        logoUrl:
+          type: string
+      required:
+        - techName
+        - logoUrl
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        error:
+          type: string
+      required:
+        - code
+        - message
