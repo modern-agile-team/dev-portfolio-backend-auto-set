@@ -4,7 +4,7 @@ export default class Repository {
   private pool;
 
   constructor() {
-      this.pool =  publicdb.getConnection();
+    this.pool = publicdb.getConnection();
   }
 
   async init(): Promise<void> {
@@ -18,6 +18,6 @@ export default class Repository {
   }
 
   async releaseConnection(): Promise<void> {
-    (await this.pool).release()
+    (await this.pool).release();
   }
 }

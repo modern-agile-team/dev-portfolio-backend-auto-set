@@ -9,7 +9,7 @@
     "skipLibCheck": true,
     "types": ["jest", "node", "@types/jest"],                              
   },
-  "include": ["./**/*"],
+  "include": [".eslintrc.json", "./**/*"],
   "exclude": ["node_modules"],
   "typeRoots": ["./src/@types/", "./node_modules/@types"]
 }

@@ -1,4 +1,4 @@
-module.exports = {
+module.export = {
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: 'coverage',
