@@ -7,7 +7,7 @@ info:
   version: 0.1.0
   license:
     name: MIT
-    url: https://github.com/jisu3817/dev-portfolio-test/blob/master/LICENSE
+    url: https://github.com/modern-agile-team/dev-portfolio-open-api/blob/master/LICENSE
   # termsOfService: http://example.com/terms/
   # contact:
   #   name: API Support
@@ -15,7 +15,7 @@ info:
   #   email: support@example.com
 
 servers:
-  - url: http://localhost:3000/api/0.1.0
+  - url: http://3.37.105.240/api
     description: Open API v0.1.0 
 
 tags: 

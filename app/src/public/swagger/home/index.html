@@ -37,9 +37,12 @@
     <script src="./swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
     <script>
     window.onload = function() {
+      const API_END_POINT = "http://3.37.105.240/swagger";
+      const URL = "v0.1.0.yaml";
+
       // Begin Swagger UI call region
       const ui = SwaggerUIBundle({
-        url: " http://127.0.0.1:3000/swagger/v0.1.0.yaml",
+        url: `${API_END_POINT}/${URL}`,
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [
