@@ -5,8 +5,13 @@ const app: express.Application = express();
 
 dotenv.config();
 
-const PORT: number = Number(process.env.PORT) || 3000;
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(`${__dirname}/src/public`));
 
-app.listen(PORT, () => console.log(`opened Express server on ${PORT}`));
+import teckstack from './src/apis/TeckStacks';
+
+app.use('/api', teckstack);
+
+export default app;

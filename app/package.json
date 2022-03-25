@@ -4,7 +4,7 @@
   "description": "데브 포트폴리오 개발을 위한 오픈 API",
   "main": "app.ts",
   "scripts": {
-    "dev": "nodemon --exec ts-node app.ts",
+    "dev": "nodemon --exec ts-node ./bin/www.ts",
     "build": "tsc && npm run dist",
     "start": "nodemon dist/bin/www.js",
     "test": "jest --detectOpenHandles --forceExit",
