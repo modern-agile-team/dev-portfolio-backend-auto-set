@@ -8,10 +8,6 @@ describe('db connection repository test', () => {
   const dbConnection = jest.fn(async () => 'success');
   publicdb.getConnection = dbConnection;
 
-  beforeEach(() => {
-    dbConnection.mockClear();
-  });
-
   it('Check the mocked init method works well', async () => {
     const repository = new Repository();
     await repository.init();

@@ -1,12 +1,13 @@
 import Repository from '../Root/Repository';
 
 export default class TeckStackRepository extends Repository {
-  constructor () {
+  constructor() {
     super();
   }
-  
-  findAllByKeyword() {
-    
-  }
 
-};
+  async findAllByKeyword(): Promise<[]> {
+    const tackStacks: [] = [];
+
+    return tackStacks;
+  }
+}

@@ -1,7 +1,7 @@
 import { Request } from 'express';
 
 interface Query {
-  keyword: string
+  keyword: string;
 }
 
 export default class TackStackService {
@@ -14,6 +14,21 @@ export default class TackStackService {
   }
 
   async findAllByKeyword() {
+    try {
       const keyword: Query = this.query.keyword;
+
+      if (keyword === undefined) {
+        return { success: false, msg: 'keyword is undefined' };
+      }
+      const tackStacks: [] = await this.teckStackRepository.findAllByKeyword();
+
+      if (!tackStacks.length) {
+        return { success: false, msg: `There aren't tackstacks you finded` };
+      }
+
+      return { success: true, tackStacks };
+    } catch (err) {
+      return { isError: true, success: false, msg: err };
+    }
   }
 }

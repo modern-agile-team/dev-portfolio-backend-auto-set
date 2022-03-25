@@ -1,3 +1,6 @@
+# Custom
+.DS_Store
+
 # Docker - DB
 data/
 
@@ -105,3 +108,4 @@ dist
 
 # TernJS port file
 .tern-port
+

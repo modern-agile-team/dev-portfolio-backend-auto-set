@@ -5,8 +5,8 @@ import TeckStackRepository from '../../services/TeckStacks/TeckStackRepository';
 interface iResponse {
   // success
   // msg
-  // 
-};
+  //
+}
 
 const TeckStackController = {
   findAllByKeyword: async (req: Request, res: Response) => {
