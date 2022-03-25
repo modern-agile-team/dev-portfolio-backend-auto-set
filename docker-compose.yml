@@ -13,8 +13,8 @@ services:
     env_file: .env
     environment:
       TZ: Asia/Seoul
-    networks:
-      - backend
+    # networks:
+    #   - backend
     restart: always
   
   nginx:
@@ -28,12 +28,12 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     command: nginx -g "daemon off;"
-    networks:
-      - backend
+    # networks:
+    #   - backend
     restart: always
 
 # 도커 컴포즈로 띄는 이미지들은 하나의 네트워크를 공유하므로 별도의 설정을 해줄 필요가 없지만
 # 같은 네트워크 대역을 사용한다는 명시용으로 적어두었음.
-networks:
-  backend:
-    driver: bridge
+# networks:
+#   backend:
+    # driver: bridge
