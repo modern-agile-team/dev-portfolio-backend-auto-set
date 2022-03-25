@@ -1,6 +1,6 @@
-// import * as express from 'express';
-// import TeckStackController from './TeckStackController';
+import * as express from 'express';
+import TeckStackController from './TeckStackController';
 
-// const router: express.Router = express.Router();
+const router: express.Router = express.Router();
 
-// router.get('/teck-stack', TeckStackController.findAllByKeyword);
+router.get('/teck-stack', TeckStackController.findAllByKeyword);

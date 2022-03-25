@@ -1,9 +1,20 @@
-// import { Request, Response } from 'express';
+import { Request, Response } from 'express';
+import TackStackService from '../../services/TeckStacks/TeckStackService';
+import TeckStackRepository from '../../services/TeckStacks/TeckStackRepository';
 
-// const TeckStackController = {
-//   findAllByKeyword: async (req: Request, res: Response) => {
-//     const response: Response = new
-//   },
-// };
+interface iResponse {
+  // success
+  // msg
+  // 
+};
 
-// export default TeckStackController;
+const TeckStackController = {
+  findAllByKeyword: async (req: Request, res: Response) => {
+    const teckStackService = new TackStackService(req, new TeckStackRepository());
+    const response = await teckStackService.findAllByKeyword();
+
+    return res.status(200).json();
+  },
+};
+
+export default TeckStackController;
