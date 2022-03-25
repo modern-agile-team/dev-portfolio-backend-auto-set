@@ -1,0 +1,14 @@
+FROM node:14.5.0
+
+WORKDIR /usr/server
+
+COPY ./app/tsconfig.json .
+COPY ./app/package.json .
+COPY ./app/package-lock.json .
+
+RUN npm ci --production
+RUN npm i -g nodemon
+
+COPY ./app/dist ./dist
+
+CMD ["npm", "start"]
