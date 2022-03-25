@@ -16,10 +16,23 @@ services:
     # networks:
     #   - backend
     restart: always
-  
+
+  nodejs:
+    depends_on:
+      - db
+    image: dnfla960/dev-portfolio:latest
+    container_name: nodejs
+    ports:
+      - 3000:3000
+    # volumes:
+      # - ./app/logs:/usr/server/logs
+    env_file: ./app/.env
+    restart: always
+
   nginx:
     depends_on:
       - db
+      - nodejs
     image: nginx:stable
     container_name: nginx
     ports:
