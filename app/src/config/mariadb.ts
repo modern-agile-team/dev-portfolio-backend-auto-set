@@ -20,4 +20,4 @@ const sampledb = mariadb.createPool({
   multipleStatements: true,
 });
 
-export {publicdb, sampledb};
+export { publicdb, sampledb };

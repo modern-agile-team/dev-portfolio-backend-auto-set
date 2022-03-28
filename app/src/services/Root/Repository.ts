@@ -1,7 +1,12 @@
 import { publicdb } from '../../config/mariadb';
 
-export default class Repository {
-  private pool;
+interface Repository {
+  init(): Promise<void>;
+  releaseConnection(): Promise<void>;
+}
+
+export default class RepositoryImpl implements Repository {
+  private pool: any;
 
   constructor() {
     this.pool = publicdb.getConnection();
@@ -12,7 +17,7 @@ export default class Repository {
   }
 
   static async build(): Promise<any> {
-    const repository = new Repository();
+    const repository = new RepositoryImpl();
     await repository.init();
     return repository;
   }
