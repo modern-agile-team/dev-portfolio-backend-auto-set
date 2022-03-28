@@ -2,16 +2,10 @@ import { Request, Response } from 'express';
 import TackStackService from '../../services/TeckStacks/TeckStackService';
 import TeckStackRepository from '../../services/TeckStacks/TeckStackRepository';
 
-interface iResponse {
-  // success
-  // msg
-  //
-}
-
 const TeckStackController = {
   findAllByKeyword: async (req: Request, res: Response) => {
-    const teckStackService = new TackStackService(req, new TeckStackRepository());
-    const response = await teckStackService.findAllByKeyword();
+    const teckStackService = new TackStackService(req, await TeckStackRepository.build());
+    await teckStackService.findAllByKeyword();
 
     return res.status(200).json();
   },
