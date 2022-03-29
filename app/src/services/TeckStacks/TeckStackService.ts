@@ -7,8 +7,7 @@ interface Query {
 
 export default class TackStackService {
   private teckStackRepository: any;
-
-  query: any;
+  private query: any;
 
   constructor(readonly req: Request, teckStackRepository: any) {
     this.query = req.query;
