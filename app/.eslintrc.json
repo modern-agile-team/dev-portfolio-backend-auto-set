@@ -25,22 +25,10 @@
     "class-methods-use-this": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "import/prefer-default-export": "off",
+    "exceptAfterSingleLine": false, // 클래스 멤버 변수 선언 시 한 줄 공백 생기지 않도록 설정
     // 불필요한 catch 사용
     "no-useless-catch": "off",
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": true,
-        "parser": "typescript",
-        "semi": true,
-        "useTabs": false,
-        "tabWidth": 2,
-        "trailingComma": "all",
-        "printWidth": 120,
-        "arrowParens": "always",
-        "endOfLine": "auto"
-      }
-    ],
+    "prettier/prettier": ["error"],
     "import/extensions": [
       "error",
       "ignorePackages",
