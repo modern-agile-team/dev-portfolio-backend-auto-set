@@ -1,6 +1,6 @@
 import RepositoryImpl from '../Root/Repository';
 
-export default class TeckStackRepository extends RepositoryImpl {
+export default class TechStackRepository extends RepositoryImpl {
   async findAllByKeyword(): Promise<[]> {
     const tackStacks: [] = [];
 

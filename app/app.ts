@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 
-import teckstack from './src/apis/TechStacks';
+import techstack from './src/apis/TechStacks';
 
 const app: express.Application = express();
 
@@ -12,6 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(`${__dirname}/src/public`));
 
-app.use('/api', teckstack);
+app.use('/api', techstack);
 
 export default app;

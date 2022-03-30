@@ -15,8 +15,8 @@ export default class TackStackService {
   }
 
   async findAllByKeyword() {
-    const { keyword } = this.query;
-
+    // const { keyword } = this.query;
+    let keyword;
     if (keyword === undefined) {
       throw new RequiredRequestError('keyword');
       // return { success: false, msg: 'keyword is undefined' };
