@@ -2,10 +2,6 @@ import { NextFunction, Request, Response } from 'express';
 import TachStackService from '../../services/TechStacks/TechStackService';
 import TechStackRepository from '../../services/TechStacks/TechStackRepository';
 
-export interface CtrlResponse extends Response {
-  err: unknown;
-}
-
 const TeckStackController = {
   findAllByKeyword: async (req: Request, res: Response, next: NextFunction) => {
     console.log(1);
@@ -16,8 +12,7 @@ const TeckStackController = {
       console.log(3);
       res.status(200).json();
     } catch (err) {
-      console.log(err);
-      (res as CtrlResponse).err = err;
+      res.err = err;
       next();
     }
   },
