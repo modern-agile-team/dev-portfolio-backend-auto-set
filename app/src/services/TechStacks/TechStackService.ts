@@ -5,13 +5,13 @@ interface Query {
   keyword: string;
 }
 
-export default class TackStackService {
-  private teckStackRepository: any;
+export default class TachStackService {
+  private techStackRepository: any;
   private query: any;
 
-  constructor(readonly req: Request, teckStackRepository: any) {
+  constructor(readonly req: Request, techStackRepository: any) {
     this.query = req.query;
-    this.teckStackRepository = teckStackRepository;
+    this.techStackRepository = techStackRepository;
   }
 
   async findAllByKeyword() {
@@ -21,13 +21,14 @@ export default class TackStackService {
       throw new RequiredRequestError('keyword');
       // return { success: false, msg: 'keyword is undefined' };
     }
-    const tackStacks: [] = await this.teckStackRepository.findAllByKeyword();
+    const tachStacks: [] = await this.techStackRepository.findAllByKeyword();
+    this.techStackRepository.release();
 
-    if (!tackStacks.length) {
-      throw new Error(`There aren't tackstacks you finded`);
-      // return { success: false, msg: `There aren't tackstacks you finded` };
+    if (!tachStacks.length) {
+      throw new Error(`There aren't tachstacks you finded`);
+      // return { success: false, msg: `There aren't tachstacks you finded` };
     }
 
-    return { success: true, tackStacks };
+    return { success: true, tachStacks };
   }
 }
