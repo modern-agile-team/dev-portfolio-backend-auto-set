@@ -1,4 +1,4 @@
-import { RequiredRequestError } from './../../common/errors/400-error';
+import { RequiredRequestError } from '../../common/errors/400-error';
 import { Request } from 'express';
 
 interface Query {
@@ -18,7 +18,7 @@ export default class TackStackService {
     const { keyword } = this.query;
 
     if (keyword === undefined) {
-      throw new RequiredRequestError('keyword is undefined');
+      throw new RequiredRequestError('keyword');
       // return { success: false, msg: 'keyword is undefined' };
     }
     const tackStacks: [] = await this.teckStackRepository.findAllByKeyword();

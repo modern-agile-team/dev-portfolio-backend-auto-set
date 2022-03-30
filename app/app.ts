@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 
-import teckstack from './src/apis/TeckStacks';
+import teckstack from './src/apis/TechStacks';
 
 const app: express.Application = express();
 
