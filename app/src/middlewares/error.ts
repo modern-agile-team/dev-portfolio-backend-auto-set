@@ -8,7 +8,6 @@ export type ErrorResponse = {
 };
 
 export const error = (req: Request, res: Response, next: NextFunction) => {
-  console.log('next로 넘어왔음');
   try {
     const { err } = res;
     let errorResponse: ErrorResponse = { error: 'Server Error', msg: 'Unknown Error', code: 500 };
