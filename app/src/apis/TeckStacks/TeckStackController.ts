@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import TackStackService from '../../services/TeckStacks/TeckStackService';
 import TeckStackRepository from '../../services/TeckStacks/TeckStackRepository';
+import { RequiredRequestError } from '../../common/errors/400-error';
 
 const TeckStackController = {
   findAllByKeyword: async (req: Request, res: Response) => {
@@ -10,7 +11,7 @@ const TeckStackController = {
 
       return res.status(200).json();
     } catch (err) {
-      if (err instanceof Error) return { success: false, msg: err.message };
+      if (err instanceof RequiredRequestError) return { error: err.name, msg: err.message, code: err.status };
       return {};
     }
   },
