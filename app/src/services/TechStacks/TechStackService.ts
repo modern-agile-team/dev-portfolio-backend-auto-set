@@ -5,7 +5,7 @@ interface Query {
   keyword: string;
 }
 
-export default class TachStackService {
+export default class TechStackService {
   private techStackRepository: any;
   private query: any;
 
@@ -21,14 +21,14 @@ export default class TachStackService {
       throw new RequiredRequestError('keyword');
       // return { success: false, msg: 'keyword is undefined' };
     }
-    const tachStacks: [] = await this.techStackRepository.findAllByKeyword();
+    const techStacks: [] = await this.techStackRepository.findAllByKeyword();
     this.techStackRepository.release();
 
-    if (!tachStacks.length) {
-      throw new Error(`There aren't tachstacks you finded`);
-      // return { success: false, msg: `There aren't tachstacks you finded` };
+    if (!techStacks.length) {
+      throw new Error(`There aren't techstacks you finded`);
+      // return { success: false, msg: `There aren't techstacks you finded` };
     }
 
-    return { success: true, tachStacks };
+    return { success: true, techStacks };
   }
 }
