@@ -8,14 +8,12 @@ interface Repository {
 export default class RepositoryImpl implements Repository {
   private pool: any;
 
-  constructor() {}
+  constructor() {
+    this.pool = publicdb.getConnection();
+  }
 
   async init(): Promise<void> {
-    console.log(this.pool);
-    this.pool = await publicdb.getConnection();
-    await this.pool.query('select * from tech_stacks');
-    (await this.pool).release();
-    console.log(this.pool);
+    await this.pool;
   }
 
   static async build(): Promise<any> {
