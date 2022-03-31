@@ -1,5 +1,5 @@
-import { RequiredRequestError } from '../../common/errors/400-error';
 import { Request } from 'express';
+import { RequiredRequestError } from '../../common/errors/400-error';
 
 interface Query {
   keyword: string;
