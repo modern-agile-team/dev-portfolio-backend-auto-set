@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+  db:
+    image: mariadb:10
+    container_name: mariadb
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db/conf.d:/etc/mysql/conf.d
+      - ./db/data:/var/lib/mysql
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    env_file: .env
+    environment:
+      TZ: Asia/Seoul
+    networks:
+      - backend
+    restart: always
+
+  nodejs:
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: dockerfile.dev
+    container_name: nodejs
+    ports:
+      - 3000:3000
+    volumes:
+      # - ./app/logs:/usr/server/logs
+      - ./app:/usr/server
+    env_file: ./app/.env
+    networks:
+      - backend
+    command: ["npm", "run", "dev"]
+    restart: always
+
+  nginx:
+    depends_on:
+      - db
+      - nodejs
+    image: nginx:stable
+    container_name: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    command: nginx -g "daemon off;"
+    networks:
+      - backend
+    restart: always
+
+# 도커 컴포즈로 띄는 이미지들은 하나의 네트워크를 공유하므로 별도의 설정을 해줄 필요가 없지만
+# 같은 네트워크 대역을 사용한다는 명시용으로 적어두었음.
+networks:
+  backend:
