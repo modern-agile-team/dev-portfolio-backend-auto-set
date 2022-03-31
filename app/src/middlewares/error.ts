@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { RequiredRequestError } from '../common/errors/400-error';
 
 export type ErrorResponse = {
@@ -7,7 +7,7 @@ export type ErrorResponse = {
   code: number;
 };
 
-export const error = (req: Request, res: Response, next: NextFunction) => {
+export const error = (req: Request, res: Response) => {
   try {
     const { err } = res;
     let errorResponse: ErrorResponse = { error: 'Server Error', msg: 'Unknown Error', code: 500 };
