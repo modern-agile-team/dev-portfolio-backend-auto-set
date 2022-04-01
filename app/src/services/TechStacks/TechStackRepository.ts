@@ -2,8 +2,8 @@ import RepositoryImpl from '../Root/Repository';
 
 export default class TechStackRepository extends RepositoryImpl {
   async findAllByKeyword(): Promise<[]> {
-    const tackStacks: [] = [];
+    const techStacks: [] = [];
 
-    return tackStacks;
+    return techStacks;
   }
 }

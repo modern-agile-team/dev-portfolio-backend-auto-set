@@ -50,6 +50,7 @@
     // "rootDirs": [],                              /* List of root folders whose combined content represents the structure of the project at runtime. */
     "typeRoots": [
       "./src/types",
+      "./src/@types/",
       "./node_modules/@types"
     ],                             /* List of folders to include type definitions from. */
     "types": ["jest", "node", "@types/jest"],       /* Type declaration files to be included in compilation. */
@@ -74,5 +75,7 @@
   },
   "include": [".eslintrc.json", "./**/*"],
   "exclude": ["node_modules"],
-  "typeRoots": ["./src/@types/", "./node_modules/@types"]
+  "ts-node": {
+    "files": true
+  }
 }
