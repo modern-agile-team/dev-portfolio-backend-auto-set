@@ -25,7 +25,7 @@ Open source that automatically builds [dev-portfolio](https://github.com/modern-
   ```bash
   $ vi .env
   ```
-2-2. Write your private values.
+2-2. Write your private values in '.env'.
   ```bash
   # MariaDB
   DB_HOST_NAME="..."
