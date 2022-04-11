@@ -42,7 +42,7 @@ Open source that automatically builds [dev-portfolio](https://github.com/modern-
   $ docker-compose up -d
   ```
 
-## Exit or Termination
+## Termination
 ```bash
 $ docker-compose down
 ```
