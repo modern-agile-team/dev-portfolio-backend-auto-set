@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS dev_portfolio;
 USE dev_portfolio;
 
-CREATE TABLE `admins` (
+CREATE TABLE IF NOT EXISTS `admins` (
 	`email`	VARCHAR(60)	NOT NULL,
 	`password`	CHAR(64)	NOT NULL	COMMENT 'SHA-256 알고리즘, 길이 고정 64자',
 	`salt`	CHAR(10)	NOT NULL	COMMENT '길이 고정 10자',
@@ -10,7 +10,7 @@ CREATE TABLE `admins` (
 	PRIMARY KEY (`email`)
 );
 
-CREATE TABLE `headers` (
+CREATE TABLE IF NOT EXISTS `headers` (
 	`no`	INT UNSIGNED	NOT NULL	AUTO_INCREMENT	COMMENT '일련 번호',
 	`title`	VARCHAR(30)	NOT NULL,
 	`logo_url`	VARCHAR(255)	NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE `headers` (
 	PRIMARY KEY (`no`)
 );
 
-CREATE TABLE `channels_in_header` (
+CREATE TABLE IF NOT EXISTS `channels_in_header` (
 	`no`	INT UNSIGNED	NOT NULL	AUTO_INCREMENT	COMMENT '일련 번호',
 	`header_no`	INT UNSIGNED	NOT NULL,
 	`name`	VARCHAR(20)	NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE `channels_in_header` (
   REFERENCES `headers` (`no`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE `tech_stacks` (
+CREATE TABLE IF NOT EXISTS `tech_stacks` (
 	`no`	INT UNSIGNED	NOT NULL	AUTO_INCREMENT	COMMENT '일련 번호',
 	`name`	VARCHAR(20)	NOT NULL,
 	`gauge`	INT	NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE `tech_stacks` (
 	PRIMARY KEY (`no`)
 );
 
-CREATE TABLE `contacts` (
+CREATE TABLE IF NOT EXISTS `contacts` (
 	`no`	INT UNSIGNED	NOT NULL	AUTO_INCREMENT	COMMENT '일련 번호',
 	`title`	VARCHAR(20)	NOT NULL,
 	`sub_title`	VARCHAR(50)	NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `contacts` (
 	PRIMARY KEY (`no`)
 );
 
-CREATE TABLE `channels_in_contact` (
+CREATE TABLE IF NOT EXISTS `channels_in_contact` (
 	`no`	INT UNSIGNED	NOT NULL	AUTO_INCREMENT	COMMENT '일련 번호',
 	`contact_no`	INT UNSIGNED	NOT NULL,
 	`name`	VARCHAR(20)	NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE `channels_in_contact` (
   REFERENCES `contacts` (`no`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE `user_infos` (
+CREATE TABLE IF NOT EXISTS `user_infos` (
 	`no`	INT UNSIGNED	NOT NULL	AUTO_INCREMENT	COMMENT '일련 번호',
 	`contact_no`	INT UNSIGNED	NOT NULL,
 	`title`	VARCHAR(40)	NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE `user_infos` (
   REFERENCES `contacts` (`no`) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE `projects` (
+CREATE TABLE IF NOT EXISTS `projects` (
 	`no`	INT UNSIGNED	NOT NULL	AUTO_INCREMENT	COMMENT '일련 번호',
 	`title`	VARCHAR(30)	NOT NULL,
 	`sub_title`	VARCHAR(100)	NULL,
@@ -77,7 +77,7 @@ CREATE TABLE `projects` (
 	PRIMARY KEY (`no`)
 );
 
-CREATE TABLE `short_introductions` (
+CREATE TABLE IF NOT EXISTS `short_introductions` (
 	`no`	INT UNSIGNED	NOT NULL	AUTO_INCREMENT	COMMENT '일련 번호',
 	`title`	VARCHAR(30)	NOT NULL,
 	`description`	VARCHAR(300)	NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE `short_introductions` (
 	PRIMARY KEY (`no`)
 );
 
-CREATE TABLE `histories` (
+CREATE TABLE IF NOT EXISTS `histories` (
 	`no`	INT UNSIGNED	NOT NULL	AUTO_INCREMENT	COMMENT '일련 번호',
 	`start_date`	DATE	NOT NULL,
 	`end_date`	DATE	NULL,
@@ -95,7 +95,7 @@ CREATE TABLE `histories` (
 	PRIMARY KEY (`no`)
 );
 
-CREATE TABLE `careers` (
+CREATE TABLE IF NOT EXISTS `careers` (
 	`no`	INT UNSIGNED	NOT NULL	AUTO_INCREMENT	COMMENT '일련 번호',
 	`start_date`	DATE	NOT NULL,
 	`end_date`	DATE	NULL,
@@ -105,7 +105,7 @@ CREATE TABLE `careers` (
 	PRIMARY KEY (`no`)
 );
 
-CREATE TABLE `visitor_comments` (
+CREATE TABLE IF NOT EXISTS `visitor_comments` (
 	`no`	INT UNSIGNED	NOT NULL	AUTO_INCREMENT	COMMENT '일련 번호',
 	`visitor_nickname`	VARCHAR(20)	NULL	DEFAULT "익명",
 	`password`	VARCHAR(30)	NOT NULL,
@@ -116,7 +116,7 @@ CREATE TABLE `visitor_comments` (
 	PRIMARY KEY (`no`)
 );
 
-CREATE TABLE `visitor_countors` (
+CREATE TABLE IF NOT EXISTS `visitor_countors` (
 	`no`	INT UNSIGNED	NOT NULL	AUTO_INCREMENT	COMMENT '일련 번호',
 	`count`	INT UNSIGNED	NULL	DEFAULT 0,
 
