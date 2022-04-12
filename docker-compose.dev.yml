@@ -23,6 +23,7 @@ services:
     build:
       context: .
       dockerfile: dockerfile.dev
+    image: dev-portfolio-api-dev
     container_name: nodejs
     ports:
       - 3000:3000
