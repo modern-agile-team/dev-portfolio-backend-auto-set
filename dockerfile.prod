@@ -6,7 +6,7 @@ COPY ./app/tsconfig.json .
 COPY ./app/package.json .
 COPY ./app/package-lock.json .
 
-RUN npm ci --production
+RUN npm i --production
 RUN npm i -g nodemon
 RUN npm i -g typescript
 
