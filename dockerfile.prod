@@ -1,6 +1,6 @@
 FROM node:14.5.0
 
-WORKDIR /usr/server
+WORKDIR /usr/app
 
 COPY ./app/tsconfig.json .
 COPY ./app/package.json .
@@ -12,7 +12,7 @@ RUN npm i -g nodemon
 RUN npm i -g typescript
 
 COPY ./app/app.ts .
-COPY ./app/bin .
+COPY ./app/bin ./bin
 COPY ./app/src ./src
 COPY ./app/.eslintrc.js .
 COPY ./app/jest.config.ts .
