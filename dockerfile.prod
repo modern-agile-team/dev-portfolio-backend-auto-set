@@ -5,14 +5,15 @@ WORKDIR /usr/server
 COPY ./app/tsconfig.json .
 COPY ./app/package.json .
 COPY ./app/package-lock.json .
-COPY ./app/.eslintrc.js .
 
 RUN npm ci --production
 RUN npm i -g nodemon
 RUN npm i -g typescript
-RUN tsc
 
-COPY ./app/dist ./dist
-COPY ./app/src/public ./dist/src/public
+COPY ./app/app.ts .
+COPY ./app/src ./src
+COPY ./app/.eslintrc.js .
+
+RUN tsc
 
 CMD ["npm", "start"]
