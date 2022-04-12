@@ -5,6 +5,7 @@ WORKDIR /usr/server
 COPY ./app/tsconfig.json .
 COPY ./app/package.json .
 COPY ./app/package-lock.json .
+COPY ./app/.eslintrc.js .
 
 RUN npm ci --production
 RUN npm i -g nodemon
