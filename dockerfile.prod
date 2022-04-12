@@ -11,9 +11,11 @@ RUN npm i -g nodemon
 RUN npm i -g typescript
 
 COPY ./app/app.ts .
+COPY ./app/bin .
 COPY ./app/src ./src
 COPY ./app/.eslintrc.js .
 COPY ./app/jest.config.ts .
+COPY ./app/.babelrc .
 
 RUN tsc
 
