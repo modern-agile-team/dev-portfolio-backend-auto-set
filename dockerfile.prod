@@ -13,6 +13,7 @@ RUN npm i -g typescript
 COPY ./app/app.ts .
 COPY ./app/src ./src
 COPY ./app/.eslintrc.js .
+COPY ./app/jest.config.ts .
 
 RUN tsc
 
