@@ -8,6 +8,8 @@ COPY ./app/package-lock.json .
 
 RUN npm ci --production
 RUN npm i -g nodemon
+RUN npm i -g typescript
+RUN tsc
 
 COPY ./app/dist ./dist
 COPY ./app/src/public ./dist/src/public
