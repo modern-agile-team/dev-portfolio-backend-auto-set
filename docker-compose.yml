@@ -20,7 +20,6 @@ services:
   nodejs:
     depends_on:
       - db
-      - nginx
     build:
       context: .
       dockerfile: dockerfile.prod
@@ -38,6 +37,7 @@ services:
   nginx:
     depends_on:
       - db
+      - nodejs
     image: nginx:stable
     container_name: nginx
     user: root
