@@ -40,11 +40,13 @@ services:
       - nodejs
     image: nginx:stable
     container_name: nginx
+    user: root
+    hostname: nginx
     ports:
       - 80:80
     volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
     command: nginx -g "daemon off;"
     networks:
       - backend
