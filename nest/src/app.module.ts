@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AdminsModule } from './admins/admins.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmConfig } from './configs/typeorm.config';
 
 @Module({
-  imports: [AdminsModule],
+  imports: [TypeOrmModule.forRoot(typeOrmConfig), AdminsModule],
 })
 export class AppModule {}
