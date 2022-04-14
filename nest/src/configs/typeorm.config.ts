@@ -2,11 +2,11 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'mariadb',
-  host: '3.37.105.240',
+  host: process.env.DB_HOST,
   port: 3306,
-  username: 'pf-admin',
-  password: 'dev-pf123!',
-  database: 'dev-portfolio',
+  username: process.env.DB_USER,
+  password: process.env.DB_PSWORD,
+  database: process.env.DB_DATABASE,
   entities: ['nest/**/*.entity.{js,ts}'],
   synchronize: false,
 };
