@@ -5,8 +5,8 @@ import { Controller, Get, Param } from '@nestjs/common';
 export class ContactsController {
   constructor(private contactService: ContactsService) {}
 
-  @Get(':id')
-  findOneById(@Param('id') id: number) {
-    return this.contactService.findOneById(id);
+  @Get(':no')
+  async findOneByNo(@Param('no') no: number) {
+    return await this.contactService.findOneByNo(no);
   }
 }
