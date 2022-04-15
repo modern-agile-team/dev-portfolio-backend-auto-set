@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Contact } from './interfaces/contact.interface';
 
 @Injectable()
-export class ContactService {
+export class ContactsService {
   private contact: Contact; // readonly
 
   findOneById(id: number): Contact {
