@@ -14,7 +14,7 @@ import { ContactsModule } from './contacts/contacts.module';
       username: process.env.DB_USER,
       password: process.env.DB_PSWORD,
       database: process.env.DB_DATABASE,
-      entities: [`${__dirname}/../**/*.entity.{js,ts}`],
+      entities: [`${__dirname}/**/*.entity.{js,ts}`],
       synchronize: false,
     }),
     AdminsModule,
