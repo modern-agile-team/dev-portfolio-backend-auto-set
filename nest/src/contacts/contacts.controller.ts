@@ -1,7 +1,7 @@
 import { ContactsService } from './contacts.service';
 import { Controller, Get, Param } from '@nestjs/common';
 
-@Controller('contact(s){0,1}')
+@Controller('contacts')
 export class ContactsController {
   constructor(private contactService: ContactsService) {}
 
