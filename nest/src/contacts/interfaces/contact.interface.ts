@@ -3,7 +3,7 @@ import { UserInfo } from './userInfo.interface';
 
 export interface Contact {
   contact: {
-    num: number;
+    no: number;
     title: string;
     subTitle: string;
     buttonText: string;

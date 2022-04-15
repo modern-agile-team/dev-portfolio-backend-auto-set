@@ -1,5 +1,5 @@
 export interface Channel {
-  num: number;
+  no: number;
   name: string;
   logoUrl: string;
 }

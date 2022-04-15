@@ -1,5 +1,5 @@
 export interface UserInfo {
-  num: number;
+  no: number;
   title: string;
   description: string;
 }
