@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CheckAdminDto } from './dto/check-admin.dto';
+// import { CheckAdminDto } from './dto/check-admin.dto';
 
 @Injectable()
 export class AdminsService {
-  async login(loginInfo: CheckAdminDto) {
-    const { email, password } = loginInfo;
-
+  async login(): Promise<object> {
+    return { statusCode: 201, message: 'success login' };
     // const isExist = await
   }
 }
