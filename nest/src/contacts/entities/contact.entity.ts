@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { ContactChannelEntity } from './contactChannel.entity';
 
-@Entity('contacts')
+@Entity('Contacts')
 export class ContactEntity {
   @PrimaryGeneratedColumn({ unsigned: true })
   no: number;
@@ -13,4 +14,10 @@ export class ContactEntity {
 
   @Column({ length: 20 })
   buttonText: string;
+
+  @OneToMany(
+    () => ContactChannelEntity,
+    (contactChannel) => contactChannel.contact,
+  )
+  contactChannels: ContactChannelEntity[];
 }
