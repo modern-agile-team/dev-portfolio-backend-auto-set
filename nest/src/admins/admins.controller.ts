@@ -14,7 +14,7 @@ export class AdminsController {
 
   @Post('/login')
   @UsePipes(ValidationPipe)
-  login(@Body() adminDto: AdminDto): Promise<void> {
+  login(@Body() adminDto: AdminDto): { token: string } {
     return this.adminsService.login(adminDto);
   }
 }
