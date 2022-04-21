@@ -6,7 +6,10 @@ import { ContactsModule } from './contacts/contacts.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    }),
     TypeOrmModule.forRoot({
       type: 'mariadb',
       host: process.env.DB_HOST,

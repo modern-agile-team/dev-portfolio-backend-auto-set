@@ -14,8 +14,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   validate(payload: any) {
     const { email } = payload;
     const user: string = process.env.ADMIN_EMAIL;
-    if (email !== user) throw new UnauthorizedException();
 
+    if (email !== user) throw new UnauthorizedException();
     return user;
   }
 }
