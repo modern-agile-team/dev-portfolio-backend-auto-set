@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { HeaderBarsService } from './header-bars.service';
+import { HeadersService } from './headers.service';
 
 describe('HeaderBarsService', () => {
-  let service: HeaderBarsService;
+  let service: HeadersService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [HeaderBarsService],
+      providers: [HeadersService],
     }).compile();
 
-    service = module.get<HeaderBarsService>(HeaderBarsService);
+    service = module.get<HeadersService>(HeadersService);
   });
 
   it('should be defined', () => {
