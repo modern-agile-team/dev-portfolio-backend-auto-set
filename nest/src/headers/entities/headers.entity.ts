@@ -1,4 +1,13 @@
-import { Entity } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
-export class Header {}
+@Entity('headers')
+export class Header {
+  @PrimaryGeneratedColumn()
+  no: number;
+
+  @Column({ length: 30 })
+  title: string;
+
+  @Column()
+  lgoUrl: string;
+}
