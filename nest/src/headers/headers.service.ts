@@ -23,4 +23,8 @@ export class HeadersService {
 
     return header[0];
   }
+
+  createOne() {
+    throw new Error('Method not implemented.');
+  }
 }
