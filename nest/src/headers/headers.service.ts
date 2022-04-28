@@ -1,9 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ChannelEntity } from './entities/channel.entity';
 import { Repository } from 'typeorm';
 import { HeaderEntity } from './entities/header.entity';
-// import { Header } from './interfaces/header.interface';
 
 @Injectable()
 export class HeadersService {
@@ -14,17 +13,14 @@ export class HeadersService {
     private channelRepository: Repository<ChannelEntity>,
   ) {}
 
-  async findAll(): Promise<any> {
-    const header = await this.headerRepository.find();
-    console.log(header);
-    const channels = await this.channelRepository.find();
-    console.log(channels);
+  async findAll(): Promise<HeaderEntity> {
+    const header: HeaderEntity[] = await this.headerRepository.find({
+      relations: ['channels'],
+      where: { no: 2 },
+    });
 
-    const result = {
-      ...header[0],
-      channels,
-    };
+    if (!header[0]) throw new NotFoundException();
 
-    return result;
+    return header[0];
   }
 }

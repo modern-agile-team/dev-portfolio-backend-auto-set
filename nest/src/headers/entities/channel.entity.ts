@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { HeaderEntity } from './header.entity';
 
 @Entity('channels_in_header')
@@ -18,7 +12,6 @@ export class ChannelEntity {
   @Column()
   url: string;
 
-  @ManyToOne(() => HeaderEntity)
-  @JoinColumn({ name: 'header_no' })
-  headerNo: HeaderEntity;
+  @ManyToOne(() => HeaderEntity, (header) => header.channels)
+  header: HeaderEntity;
 }
