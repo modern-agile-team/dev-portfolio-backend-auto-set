@@ -1,6 +1,10 @@
 export interface Header {
-  headerBarNum: number;
+  no: number;
   title: string;
   logoUrl: string;
-  channels: [];
+  channels: Channel;
+}
+
+interface Channel {
+  channel: Array<{ no: number; name: string; url: string; headerNo: number }>;
 }

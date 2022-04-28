@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { HeadersService } from './headers.service';
 import { HeadersController } from './headers.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Header } from './entities/header.entity';
-import { Channel } from 'diagnostics_channel';
+import { HeaderEntity } from './entities/header.entity';
+import { ChannelEntity } from './entities/channel.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Header, Channel])],
+  imports: [TypeOrmModule.forFeature([HeaderEntity, ChannelEntity])],
   controllers: [HeadersController],
   providers: [HeadersService],
 })

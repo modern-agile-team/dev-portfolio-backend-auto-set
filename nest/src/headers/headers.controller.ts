@@ -5,7 +5,7 @@ import { HeadersService } from './headers.service';
 export class HeadersController {
   constructor(private readonly headersService: HeadersService) {}
 
-  @Get()
+  @Get('/')
   findAll() {
     return this.headersService.findAll();
   }
