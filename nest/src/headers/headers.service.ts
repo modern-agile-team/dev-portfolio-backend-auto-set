@@ -7,6 +7,7 @@ import { HeaderDto } from './dto/header.dto';
 
 @Injectable()
 export class HeadersService {
+  private header: HeaderDto;
   constructor(
     @InjectRepository(HeaderEntity)
     private headerRepository: Repository<HeaderEntity>,
@@ -20,7 +21,8 @@ export class HeadersService {
       relations: ['channels'],
     });
 
-    if (!header) throw new NotFoundException();
+    if (!header)
+      throw new NotFoundException(`Can't find header with id ${headerId}`);
 
     return header;
   }
