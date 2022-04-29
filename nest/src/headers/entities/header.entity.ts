@@ -1,8 +1,14 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ChannelEntity } from './channel.entity';
 
 @Entity('headers')
-export class HeaderEntity {
+export class HeaderEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   no: number;
 
