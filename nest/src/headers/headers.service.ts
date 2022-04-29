@@ -4,12 +4,13 @@ import { Channel } from './entities/channel.entity';
 import { Repository } from 'typeorm';
 import { Header } from './entities/header.entity';
 import { HeaderDto } from './dto/header.dto';
+import { HeaderRepository } from './header.repository';
 
 @Injectable()
 export class HeadersService {
   constructor(
-    @InjectRepository(Header)
-    private headerRepository: Repository<Header>,
+    @InjectRepository(HeaderRepository)
+    private headerRepository: HeaderRepository,
     @InjectRepository(Channel)
     private channelRepository: Repository<Channel>,
   ) {}
