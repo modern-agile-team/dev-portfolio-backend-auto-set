@@ -1,8 +1,14 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { HeaderEntity } from './header.entity';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Header } from './header.entity';
 
 @Entity('channels_in_header')
-export class ChannelEntity {
+export class Channel extends BaseEntity {
   @PrimaryGeneratedColumn()
   no: number;
 
@@ -12,6 +18,6 @@ export class ChannelEntity {
   @Column()
   url: string;
 
-  @ManyToOne(() => HeaderEntity, (header) => header.channels)
-  header: HeaderEntity;
+  @ManyToOne(() => Header, (header) => header.channels)
+  header: Header;
 }

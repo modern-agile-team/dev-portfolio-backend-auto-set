@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { HeaderDto } from './dto/header.dto';
+import { Header } from './entities/header.entity';
 import { HeadersService } from './headers.service';
 
 @Controller('headers')
@@ -19,7 +20,9 @@ export class HeadersController {
   constructor(private readonly headersService: HeadersService) {}
 
   @Get('/:id')
-  async findAllById(@Param('id', ParseIntPipe) headerId: number) {
+  async findAllById(
+    @Param('id', ParseIntPipe) headerId: number,
+  ): Promise<Header> {
     return await this.headersService.findAllById(headerId);
   }
 

@@ -1,22 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ChannelEntity } from './entities/channel.entity';
+import { Channel } from './entities/channel.entity';
 import { Repository } from 'typeorm';
-import { HeaderEntity } from './entities/header.entity';
+import { Header } from './entities/header.entity';
 import { HeaderDto } from './dto/header.dto';
 
 @Injectable()
 export class HeadersService {
-  private header: HeaderDto;
   constructor(
-    @InjectRepository(HeaderEntity)
-    private headerRepository: Repository<HeaderEntity>,
-    @InjectRepository(ChannelEntity)
-    private channelRepository: Repository<ChannelEntity>,
+    @InjectRepository(Header)
+    private headerRepository: Repository<Header>,
+    @InjectRepository(Channel)
+    private channelRepository: Repository<Channel>,
   ) {}
 
-  async findAllById(headerId: number): Promise<HeaderEntity> {
-    const header: HeaderEntity = await this.headerRepository.findOne({
+  async findAllById(headerId: number): Promise<Header> {
+    const header: Header = await this.headerRepository.findOne({
       where: { no: headerId },
       relations: ['channels'],
     });
