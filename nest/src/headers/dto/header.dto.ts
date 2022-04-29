@@ -1,6 +1,13 @@
-export class header {
+import { IsNotEmpty } from 'class-validator';
+
+export class HeaderDto {
+  @IsNotEmpty()
   title: string;
+
+  @IsNotEmpty()
   logoUrl: string;
+
+  @IsNotEmpty()
   channels: Array<Channel>;
 }
 

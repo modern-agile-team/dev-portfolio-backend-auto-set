@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ChannelEntity } from './entities/channel.entity';
 import { Repository } from 'typeorm';
 import { HeaderEntity } from './entities/header.entity';
+import { HeaderDto } from './dto/header.dto';
 
 @Injectable()
 export class HeadersService {
@@ -13,18 +14,18 @@ export class HeadersService {
     private channelRepository: Repository<ChannelEntity>,
   ) {}
 
-  async findAll(): Promise<HeaderEntity> {
-    const header: HeaderEntity[] = await this.headerRepository.find({
+  async findAllById(headerId: number): Promise<HeaderEntity> {
+    const header: HeaderEntity = await this.headerRepository.findOne({
+      where: { no: headerId },
       relations: ['channels'],
-      where: { no: 2 },
     });
 
-    if (!header[0]) throw new NotFoundException();
+    if (!header) throw new NotFoundException();
 
-    return header[0];
+    return header;
   }
 
-  createOne() {
+  createOne(header: HeaderDto) {
     throw new Error('Method not implemented.');
   }
 }
