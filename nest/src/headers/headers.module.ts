@@ -4,6 +4,7 @@ import { HeadersController } from './headers.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Header } from './entities/header.entity';
 import { Channel } from './entities/channel.entity';
+// import { HeaderRepository } from './header.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Header, Channel])],

@@ -20,10 +20,8 @@ export class HeadersController {
   constructor(private readonly headersService: HeadersService) {}
 
   @Get('/:id')
-  async findAllById(
-    @Param('id', ParseIntPipe) headerId: number,
-  ): Promise<Header> {
-    return await this.headersService.findAllById(headerId);
+  findAllById(@Param('id', ParseIntPipe) headerId: number): Promise<Header> {
+    return this.headersService.findOneById(headerId);
   }
 
   @Post()
