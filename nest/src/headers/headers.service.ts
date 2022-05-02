@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-// import { Channel } from './entities/channel.entity';
+import { Channel } from './entities/channel.entity';
 import { Repository } from 'typeorm';
 import { Header } from './entities/header.entity';
 import { HeaderDto } from './dto/header.dto';
@@ -10,7 +10,9 @@ import { HeaderDto } from './dto/header.dto';
 export class HeadersService {
   constructor(
     @InjectRepository(Header)
-    private headerRepository: Repository<Header>, // @InjectRepository(Channel) // private channelRepository: Repository<Channel>,
+    private headerRepository: Repository<Header>,
+    @InjectRepository(Channel)
+    private channelRepository: Repository<Channel>,
   ) {}
 
   async findOneById(headerId: number): Promise<Header> {
@@ -25,7 +27,30 @@ export class HeadersService {
     return header;
   }
 
-  createOne(header: HeaderDto) {
-    throw new Error('Method not implemented.');
+  async createOne(headerInfo: HeaderDto) {
+    const header = new Header();
+
+    header.title = headerInfo.title;
+    header.logoUrl = headerInfo.logoUrl;
+
+    await this.headerRepository.save(header);
+
+    for (let i = 0; i < headerInfo.channels.length; i += 1) {
+      const channelInfo = headerInfo.channels[i];
+      const channel = new Channel();
+
+      channel.name = channelInfo.name;
+      channel.url = channelInfo.url;
+      channel.header = header;
+
+      await this.channelRepository.save(channel);
+    }
+
+    const savedHeader: Header = await this.headerRepository.findOne({
+      where: { no: header.no },
+      relations: ['channels'],
+    });
+
+    return savedHeader;
   }
 }

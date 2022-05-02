@@ -12,5 +12,6 @@ export class HeaderDto {
 }
 
 interface Channel {
-  channel: { name: string; url: string };
+  name: string;
+  url: string;
 }

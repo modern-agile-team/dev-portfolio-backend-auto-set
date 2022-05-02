@@ -2,6 +2,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -19,5 +20,6 @@ export class Channel extends BaseEntity {
   url: string;
 
   @ManyToOne(() => Header, (header) => header.channels)
+  @JoinColumn({ name: 'header_no' })
   header: Header;
 }

@@ -26,7 +26,7 @@ export class HeadersController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  async createOne(@Body() header: HeaderDto) {
-    return await this.headersService.createOne(header);
+  async createOne(@Body() headerInfo: HeaderDto): Promise<Header> {
+    return await this.headersService.createOne(headerInfo);
   }
 }
