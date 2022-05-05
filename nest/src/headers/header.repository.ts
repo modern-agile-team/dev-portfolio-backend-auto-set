@@ -1,17 +1,15 @@
-import { NotFoundException } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { Header } from './entities/header.entity';
 
 @EntityRepository(Header)
 export class HeaderRepository extends Repository<Header> {
-  async findOneById(headerId: number) {
-    const header: Header = await this.findOne({
-      where: { no: headerId },
-      relations: ['channels'],
-    });
+  async createHeader(title: string, logoUrl: string): Promise<Header> {
+    const header = new Header();
 
-    if (!header)
-      throw new NotFoundException(`Can't find header with id ${headerId}`);
+    header.title = title;
+    header.logoUrl = logoUrl;
+
+    await this.save(header);
 
     return header;
   }

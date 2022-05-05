@@ -5,6 +5,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -26,7 +27,16 @@ export class HeadersController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  async createOne(@Body() headerInfo: HeaderDto): Promise<Header> {
-    return await this.headersService.createOne(headerInfo);
+  createOne(@Body() headerInfo: HeaderDto): Promise<Header> {
+    return this.headersService.createOne(headerInfo);
+  }
+
+  @Put('/:id')
+  @UsePipes(ValidationPipe)
+  updateOneById(
+    @Param('id', ParseIntPipe) headerId: number,
+    @Body() headerInfo: HeaderDto,
+  ) {
+    return this.headersService.updateOneById(headerId, headerInfo);
   }
 }
