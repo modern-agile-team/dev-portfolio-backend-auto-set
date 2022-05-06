@@ -53,6 +53,11 @@ export class HeadersService {
         .from(Channel)
         .where('header = :no', { no: headerNo })
         .execute();
+
+      // const updateChannel = await this.channelRepository.createChannel(
+      //   headerInfo.channels,
+      //   headerNo,
+      // );
     }
   }
 }
