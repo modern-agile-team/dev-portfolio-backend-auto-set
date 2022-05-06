@@ -20,9 +20,9 @@ import { HeadersService } from './headers.service';
 export class HeadersController {
   constructor(private readonly headersService: HeadersService) {}
 
-  @Get('/:id')
-  findAllById(@Param('id', ParseIntPipe) headerId: number): Promise<Header> {
-    return this.headersService.findOneById(headerId);
+  @Get('/:no')
+  findAllByNo(@Param('no', ParseIntPipe) headerNo: number): Promise<Header> {
+    return this.headersService.findOneByNo(headerNo);
   }
 
   @Post()
@@ -31,12 +31,12 @@ export class HeadersController {
     return this.headersService.createOne(headerInfo);
   }
 
-  @Put('/:id')
+  @Put('/:no')
   @UsePipes(ValidationPipe)
-  updateOneById(
-    @Param('id', ParseIntPipe) headerId: number,
+  updateOneByNo(
+    @Param('no', ParseIntPipe) headerNo: number,
     @Body() headerInfo: HeaderDto,
   ) {
-    return this.headersService.updateOneById(headerId, headerInfo);
+    return this.headersService.updateOneByNo(headerNo, headerInfo);
   }
 }

@@ -1,67 +1,58 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-// import { InjectRepository } from '@nestjs/typeorm';
-// import { Channel } from './entities/channel.entity';
-// import { Repository } from 'typeorm';
 import { Header } from './entities/header.entity';
 import { HeaderDto } from './dto/header.dto';
 import { HeaderRepository } from './header.repository';
 import { ChannelRepository } from './channel.repository';
+import { getConnection } from 'typeorm';
+import { Channel } from './entities/channel.entity';
 
 @Injectable()
 export class HeadersService {
   constructor(
-    private headerRepository: HeaderRepository, // @InjectRepository(Header) // private headerRepository: Repository<Header>, // @InjectRepository(Channel) // private channelRepository: Repository<Channel>,
+    private headerRepository: HeaderRepository,
     private channelRepository: ChannelRepository,
   ) {}
 
-  async findOneById(headerId: number): Promise<Header> {
+  async findOneByNo(headerNo: number): Promise<Header> {
     const header: Header = await this.headerRepository.findOne({
-      where: { no: headerId },
+      where: { no: headerNo },
       relations: ['channels'],
     });
 
     if (!header)
-      throw new NotFoundException(`Can't find header with id ${headerId}`);
+      throw new NotFoundException(`Can't find header with no ${headerNo}`);
 
     return header;
   }
 
   async createOne(headerInfo: HeaderDto): Promise<Header> {
     const { title, logoUrl, channels } = headerInfo;
+
     const header = await this.headerRepository.createHeader(title, logoUrl);
-    // const header = new Header();
-
-    // header.title = headerInfo.title;
-    // header.logoUrl = headerInfo.logoUrl;
-
-    // await this.headerRepository.save(header);
 
     await this.channelRepository.createChannel(channels, header);
-    // for (let i = 0; i < headerInfo.channels.length; i += 1) {
-    //   const channelInfo = headerInfo.channels[i];
-    //   const channel = new Channel();
 
-    //   channel.name = channelInfo.name;
-    //   channel.url = channelInfo.url;
-    //   channel.header = header;
-
-    //   await this.channelRepository.save(channel);
-    // }
-
-    const savedHeader: Header = await this.headerRepository.findOne({
+    return await this.headerRepository.findOne({
       where: { no: header.no },
       relations: ['channels'],
     });
-
-    return savedHeader;
   }
 
-  async updateOneById(headerId: number, headerInfo: HeaderDto) {
+  async updateOneByNo(headerNo: number, headerInfo: HeaderDto) {
     const header = {
       title: headerInfo.title,
       logoUrl: headerInfo.logoUrl,
     };
 
-    const result = await this.headerRepository.update(headerId, header);
+    const updateHeader = await this.headerRepository.update(headerNo, header);
+
+    if (updateHeader.affected) {
+      await getConnection()
+        .createQueryBuilder()
+        .delete()
+        .from(Channel)
+        .where('header = :no', { no: headerNo })
+        .execute();
+    }
   }
 }
