@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Header } from './entities/header.entity';
 import { HeaderDto } from './dto/header.dto';
-import { HeaderRepository } from './header.repository';
-import { ChannelRepository } from './channel.repository';
+import { HeaderRepository } from './repositories/header.repository';
+import { ChannelRepository } from './repositories/channel.repository';
 import { getConnection } from 'typeorm';
 import { Channel } from './entities/channel.entity';
 
