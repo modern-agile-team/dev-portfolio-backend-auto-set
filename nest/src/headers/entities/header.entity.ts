@@ -18,6 +18,8 @@ export class Header extends BaseEntity {
   @Column({ name: 'logo_url' })
   logoUrl: string;
 
-  @OneToMany(() => Channel, (channel) => channel.header)
+  @OneToMany(() => Channel, (channel) => channel.header, {
+    cascade: ['insert', 'update'],
+  })
   channels: Channel[];
 }
