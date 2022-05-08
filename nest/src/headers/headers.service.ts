@@ -6,16 +6,10 @@ import {
 import { Header } from './entities/header.entity';
 import { HeaderDto } from './dto/header.dto';
 import { HeaderRepository } from './repositories/header.repository';
-import { ChannelRepository } from './repositories/channel.repository';
-import { getConnection } from 'typeorm';
-import { Channel } from './entities/channel.entity';
 
 @Injectable()
 export class HeadersService {
-  constructor(
-    private headerRepository: HeaderRepository,
-    private channelRepository: ChannelRepository,
-  ) {}
+  constructor(private headerRepository: HeaderRepository) {}
 
   async findOneByNo(headerNo: number): Promise<Header> {
     const header: Header = await this.headerRepository.findOne({
