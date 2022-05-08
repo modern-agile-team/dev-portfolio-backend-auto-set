@@ -19,7 +19,8 @@ export class Header extends BaseEntity {
   logoUrl: string;
 
   @OneToMany(() => Channel, (channel) => channel.header, {
-    cascade: ['insert', 'update'],
+    onDelete: 'CASCADE',
+    cascade: true,
   })
   channels: Channel[];
 }

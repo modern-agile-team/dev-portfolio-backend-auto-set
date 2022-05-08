@@ -19,7 +19,7 @@ export class Channel extends BaseEntity {
   @Column()
   url: string;
 
-  @ManyToOne(() => Header, (header) => header.channels)
+  @ManyToOne(() => Header, (header) => header.channels, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'header_no' })
   header: Header;
 }
