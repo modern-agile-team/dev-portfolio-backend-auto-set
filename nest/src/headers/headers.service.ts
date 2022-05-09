@@ -6,10 +6,14 @@ import {
 import { Header } from './entities/header.entity';
 import { HeaderDto } from './dto/header.dto';
 import { HeaderRepository } from './repositories/header.repository';
+import { Connection } from 'typeorm';
 
 @Injectable()
 export class HeadersService {
-  constructor(private headerRepository: HeaderRepository) {}
+  constructor(
+    private headerRepository: HeaderRepository,
+    private connection: Connection,
+  ) {}
 
   async findOneByNo(headerNo: number): Promise<Header> {
     const header: Header = await this.headerRepository.findOne({
@@ -24,24 +28,49 @@ export class HeadersService {
   }
 
   async createOne(headerInfo: HeaderDto): Promise<Header> {
-    const header: Header = await this.headerRepository.save(headerInfo);
+    const queryRunner = this.connection.createQueryRunner();
 
-    return header;
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const header: Header = await this.headerRepository.save(headerInfo);
+
+      await queryRunner.commitTransaction();
+
+      return header;
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+
+      throw new InternalServerErrorException(`Can't create header`);
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   async updateOneByNo(
     headerNo: number,
     headerInfo: HeaderDto,
   ): Promise<Header> {
-    const isDelete = await this.headerRepository.delete({ no: headerNo });
+    const queryRunner = this.connection.createQueryRunner();
 
-    if (isDelete.affected) {
-      const header: Header = await this.headerRepository.save(headerInfo);
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
 
-      return header;
+    try {
+      const isDelete = await this.headerRepository.delete({ no: headerNo });
+
+      if (isDelete.affected) {
+        const header: Header = await this.headerRepository.save(headerInfo);
+
+        return header;
+      }
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+
+      throw new InternalServerErrorException(`Can't create header`);
+    } finally {
+      await queryRunner.release();
     }
-    throw new InternalServerErrorException(
-      `Can't update header with no ${headerNo}`,
-    );
   }
 }
