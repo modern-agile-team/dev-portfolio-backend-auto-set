@@ -28,24 +28,9 @@ export class HeadersService {
   }
 
   async createOne(headerInfo: HeaderDto): Promise<Header> {
-    const queryRunner = this.connection.createQueryRunner();
+    const header: Header = await this.headerRepository.save(headerInfo);
 
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
-    try {
-      const header: Header = await this.headerRepository.save(headerInfo);
-
-      await queryRunner.commitTransaction();
-
-      return header;
-    } catch (error) {
-      await queryRunner.rollbackTransaction();
-
-      throw new InternalServerErrorException(`Can't create header`);
-    } finally {
-      await queryRunner.release();
-    }
+    return header;
   }
 
   async updateOneByNo(
