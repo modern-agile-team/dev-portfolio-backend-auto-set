@@ -1,5 +1,6 @@
 import {
   Body,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -36,7 +37,12 @@ export class TechStacksController {
   updateOneByNo(
     @Param('no', ParseIntPipe) techStackNo: number,
     @Body() techStackInfo: TechStackDto,
-  ) {
+  ): Promise<TechStack> {
     return this.techStacksService.updateOneByNo(techStackNo, techStackInfo);
+  }
+
+  @Delete(':no')
+  deleteOneByNo(@Param('no', ParseIntPipe) techStackNo: number) {
+    return this.techStacksService.deleteOneByNo(techStackNo);
   }
 }

@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TechStackDto } from './dto/tech-stack.dto';
@@ -53,5 +57,14 @@ export class TechStacksService {
     } finally {
       await queryRunner.release();
     }
+  }
+
+  async deleteOneByNo(techStackNo: number) {
+    const result = await this.techStackRepository.delete(techStackNo);
+
+    if (!result.affected)
+      throw new NotFoundException(
+        `Can't delete techStack with no ${techStackNo}`,
+      );
   }
 }
