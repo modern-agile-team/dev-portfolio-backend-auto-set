@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AdminsModule } from './admins/admins.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { HeadersModule } from './headers/headers.module';
+import { TechStacksModule } from './tech-stacks/tech-stacks.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { HeadersModule } from './headers/headers.module';
     AdminsModule,
     ContactsModule,
     HeadersModule,
+    TechStacksModule,
   ],
 })
 export class AppModule {}
