@@ -9,5 +9,5 @@ export class TechStack extends BaseEntity {
   name: string;
 
   @Column()
-  guage: number;
+  gauge: number;
 }
