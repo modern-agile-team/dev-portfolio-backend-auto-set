@@ -1,7 +1,10 @@
 import {
   Body,
   Get,
+  Param,
+  ParseIntPipe,
   Post,
+  Put,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -26,5 +29,14 @@ export class TechStacksController {
   @UsePipes(ValidationPipe)
   createOne(@Body() techStackInfo: TechStackDto) {
     return this.techStacksService.createOne(techStackInfo);
+  }
+
+  @Put(':no')
+  @UsePipes(ValidationPipe)
+  updateOneByNo(
+    @Param('no', ParseIntPipe) techStackNo: number,
+    @Body() techStackInfo: TechStackDto,
+  ) {
+    return this.techStacksService.updateOneByNo(techStackNo, techStackInfo);
   }
 }

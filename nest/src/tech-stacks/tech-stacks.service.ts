@@ -22,4 +22,20 @@ export class TechStacksService {
 
     return techStack;
   }
+
+  async updateOneByNo(
+    techStackNo: number,
+    techStackInfo: TechStackDto,
+  ): Promise<TechStack> {
+    const techStack: TechStack = await this.techStackRepository.findOne(
+      techStackNo,
+    );
+
+    techStack.name = techStackInfo.name;
+    techStack.gauge = techStackInfo.gauge;
+
+    await this.techStackRepository.save(techStack);
+
+    return techStack;
+  }
 }
