@@ -7,5 +7,5 @@ export class TechStackDto {
 
   @IsNotEmpty()
   @IsNumber()
-  gauage: number;
+  gauge: number;
 }

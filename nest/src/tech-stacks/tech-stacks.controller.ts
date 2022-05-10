@@ -1,6 +1,14 @@
-import { Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Get,
+  Post,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Controller } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { TechStackDto } from './dto/tech-stack.dto';
 import { TechStack } from './entities/tech-stack.entity';
 import { TechStacksService } from './tech-stacks.service';
 
@@ -15,5 +23,8 @@ export class TechStacksController {
   }
 
   @Post()
-  createOne() {}
+  @UsePipes(ValidationPipe)
+  createOne(@Body() techStackInfo: TechStackDto) {
+    return this.techStacksService.createOne(techStackInfo);
+  }
 }
