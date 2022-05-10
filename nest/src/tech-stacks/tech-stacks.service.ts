@@ -13,4 +13,6 @@ export class TechStacksService {
   async findAll(): Promise<TechStack[]> {
     return await this.techStackRepository.find();
   }
+
+  async createOne() {}
 }

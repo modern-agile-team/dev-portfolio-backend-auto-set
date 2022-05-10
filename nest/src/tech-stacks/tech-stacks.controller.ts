@@ -1,4 +1,4 @@
-import { Get, UseGuards } from '@nestjs/common';
+import { Get, Post, UseGuards } from '@nestjs/common';
 import { Controller } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { TechStack } from './entities/tech-stack.entity';
@@ -13,4 +13,7 @@ export class TechStacksController {
   findAll(): Promise<TechStack[]> {
     return this.techStacksService.findAll();
   }
+
+  @Post()
+  createOne() {}
 }
