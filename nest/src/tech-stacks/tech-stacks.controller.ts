@@ -10,7 +10,7 @@ export class TechStacksController {
   constructor(private readonly techStacksService: TechStacksService) {}
 
   @Get()
-  findAll(): Promise<TechStack> {
+  findAll(): Promise<TechStack[]> {
     return this.techStacksService.findAll();
   }
 }

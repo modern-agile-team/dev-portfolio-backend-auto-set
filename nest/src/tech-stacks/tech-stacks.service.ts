@@ -10,7 +10,7 @@ export class TechStacksService {
     private techStackRepository: Repository<TechStack>,
   ) {}
 
-  async findAll(): Promise<TechStack> {
-    return await this.techStackRepository.findOne();
+  async findAll(): Promise<TechStack[]> {
+    return await this.techStackRepository.find();
   }
 }
