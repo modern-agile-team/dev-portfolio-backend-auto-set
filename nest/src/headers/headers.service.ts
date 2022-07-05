@@ -53,7 +53,7 @@ export class HeadersService {
     } catch (error) {
       await queryRunner.rollbackTransaction();
 
-      throw new InternalServerErrorException('Can't create header');
+      throw new InternalServerErrorException(`Can't create header`);
     } finally {
       await queryRunner.release();
     }
