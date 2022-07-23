@@ -1,4 +1,4 @@
-import HeaderRepository from '../model/header-repository';
+import HeaderRepository from '../model/headerRepository';
 import { Request } from 'express';
 
 class Header {
