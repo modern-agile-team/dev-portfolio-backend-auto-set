@@ -4,7 +4,7 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-import techStack from './src/apis/tech-stack';
+import header from './src/apis/header';
 
 app.listen(PORT, () => {
   console.log(`server start at ${PORT}`);
@@ -13,6 +13,6 @@ app.listen(PORT, () => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/', techStack);
+app.use('/api/header', header);
 
 export = app;
