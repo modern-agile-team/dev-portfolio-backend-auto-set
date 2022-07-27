@@ -1,12 +1,13 @@
-import { RowDataPacket } from 'mysql2';
+import { OkPacket, RowDataPacket } from 'mysql2';
 import db from '../config/db';
+import { ServerError } from '../service/error';
 
 interface VisitorDto extends RowDataPacket {
   visitorCount: number;
 }
 
 class VisitorRepository {
-  async getVisitors(): Promise<VisitorDto | Error> {
+  async getVisitorCnt(): Promise<VisitorDto | Error> {
     let conn;
     try {
       conn = await db.getConnection();
@@ -17,7 +18,25 @@ class VisitorRepository {
 
       return rows[0];
     } catch (error) {
-      throw new Error('INTERNAL SERVER ERROR!');
+      throw new ServerError('INTERNAL SERVER ERROR!');
+    } finally {
+      conn?.release();
+    }
+  }
+
+  async updateVisitorCnt(): Promise<number | Error> {
+    let conn;
+    try {
+      conn = await db.getConnection();
+
+      const query =
+        'UPDATE number_of_visitors SET count = count + 1 WHERE visitor_id = ';
+
+      const [row] = await conn.execute<OkPacket>(query);
+
+      return row.affectedRows;
+    } catch (error) {
+      throw new ServerError('INTERNAL SERVER ERROR!');
     } finally {
       conn?.release();
     }

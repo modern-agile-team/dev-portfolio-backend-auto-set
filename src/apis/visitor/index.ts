@@ -3,6 +3,7 @@ import visitorCtrl from './visitor.ctrl';
 
 const router: express.Router = express.Router();
 
-router.get('/', visitorCtrl.getVisitors);
+router.get('/', visitorCtrl.getVisitor);
+router.put('/', visitorCtrl.updateVisitor);
 
 export default router;

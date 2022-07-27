@@ -9,9 +9,15 @@ class Visitor {
     this.req = req;
   }
 
-  async getVisitors() {
-    const visitorCnt = this.visitorRepository.getVisitors();
+  async getVisitorCnt() {
+    const visitorCnt = await this.visitorRepository.getVisitorCnt();
     return visitorCnt;
+  }
+
+  async updateVisitorCnt() {
+    const visitorCnt = await this.visitorRepository.updateVisitorCnt();
+
+    if (visitorCnt) return visitorCnt;
   }
 }
 export default Visitor;
