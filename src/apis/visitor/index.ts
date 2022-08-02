@@ -6,4 +6,6 @@ const router: express.Router = express.Router();
 router.get('/', visitorCtrl.getVisitor);
 router.put('/', visitorCtrl.updateVisitor);
 
+router.post('/comment', visitorCtrl.createVisitComment);
+router.put('/comment/:id', visitorCtrl.updateVisitCommentById);
 export default router;
