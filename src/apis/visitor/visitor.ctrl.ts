@@ -42,9 +42,10 @@ const updateVisitor = async (req: Request, res: Response) => {
 };
 
 const createVisitComment = async (req: Request, res: Response) => {
-  try {
-    const { body } = req;
+  const { body } = req;
 
+  try {
+    // validation check 라우터로 분리해줄 예정.
     const visitorCmt = new VisitorCmtDtoValidationCheck();
     visitorCmt.nickname = body.nickname;
     visitorCmt.password = body.password;
@@ -71,13 +72,13 @@ const createVisitComment = async (req: Request, res: Response) => {
       .json({ success: false, msg: '방명록 저장에 실패했습니다.' });
   } catch (error) {
     if (error instanceof ServerError) {
-      console.log(error);
+      console.error(error);
       return res.status(500).json(error.message);
     } else if (error instanceof BadRequestError) {
-      console.log(error);
+      console.error(error);
       return res.status(404).json(error.message);
     } else if (error instanceof Error) {
-      console.log(error);
+      console.error(error);
       return res.status(500).json('알 수 없는 에러입니다.');
     }
   }
@@ -86,12 +87,11 @@ const createVisitComment = async (req: Request, res: Response) => {
 const updateVisitCommentById = async (req: Request, res: Response) => {
   const { body } = req;
   const { id: commentId } = req.params;
+
   try {
     const visitorCmt = new VisitorCmtDtoValidationCheck();
-    visitorCmt.nickname = body.nickname;
     visitorCmt.password = body.password;
     visitorCmt.description = body.description;
-    visitorCmt.date = body.date;
 
     const validationError: ValidationError[] = await validate(visitorCmt);
 
