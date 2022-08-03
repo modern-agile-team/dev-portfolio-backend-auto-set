@@ -76,7 +76,7 @@ const createVisitComment = async (req: Request, res: Response) => {
     } else if (error instanceof BadRequestError) {
       console.log(error);
       return res.status(404).json(error.message);
-    } else {
+    } else if (error instanceof Error) {
       console.log(error);
       return res.status(500).json('알 수 없는 에러입니다.');
     }
@@ -88,6 +88,7 @@ const updateVisitCommentById = async (req: Request, res: Response) => {
   const { id: commentId } = req.params;
   try {
     const visitorCmt = new VisitorCmtDtoValidationCheck();
+    visitorCmt.nickname = body.nickname;
     visitorCmt.password = body.password;
     visitorCmt.description = body.description;
     visitorCmt.date = body.date;

@@ -1,10 +1,11 @@
-import { OkPacket, RowDataPacket } from 'mysql2';
+import { OkPacket, ResultSetHeader } from 'mysql2';
+import {
+  VisitorCmtDto,
+  VisitorCmtEntity,
+  VisitorDto,
+} from '../apis/visitor/dto';
 import db from '../config/db';
 import { ServerError } from '../service/error';
-
-interface VisitorDto extends RowDataPacket {
-  visitorCount: number;
-}
 
 class VisitorRepository {
   async getVisitorCnt(): Promise<VisitorDto | Error> {
@@ -18,7 +19,7 @@ class VisitorRepository {
 
       return rows[0];
     } catch (error) {
-      throw new ServerError('INTERNAL SERVER ERROR!');
+      throw new ServerError('Database Error Occurred');
     } finally {
       conn?.release();
     }
@@ -36,7 +37,35 @@ class VisitorRepository {
 
       return row.affectedRows;
     } catch (error) {
-      throw new ServerError('INTERNAL SERVER ERROR!');
+      throw new ServerError('Database Error Occurred');
+    } finally {
+      conn?.release();
+    }
+  }
+
+  async createComment({
+    nickname,
+    password,
+    description,
+    date,
+  }: VisitorCmtDto) {
+    let conn;
+    try {
+      conn = await db.getConnection();
+
+      const query = `
+        INSERT INTO visitor_comments (nickname, password, description, create_date) VALUES (?, ?, ?, ?);`;
+
+      const [row] = await conn.execute<ResultSetHeader>(query, [
+        nickname,
+        password,
+        description,
+        date,
+      ]);
+
+      return row.affectedRows;
+    } catch (error) {
+      throw new ServerError('Database Error Occurred');
     } finally {
       conn?.release();
     }

@@ -1,12 +1,5 @@
-import { RowDataPacket } from 'mysql2';
+import { HeaderDto } from '../apis/header/dto';
 import mysqlPool from '../config/db';
-
-interface HeaderDto extends RowDataPacket {
-  id: number;
-  logoUrl: string;
-  logoImageUrl: string;
-  title: string;
-}
 
 class HeaderRepository {
   constructor() {}
