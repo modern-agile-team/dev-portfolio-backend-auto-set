@@ -72,18 +72,20 @@ class VisitorRepository {
     }
   }
 
-  async getVisitorCommentById(visitorCommentId: number): Promise<string> {
+  async getVisitorCommentById(
+    visitorCommentId: number
+  ): Promise<VisitorCmtEntity> {
     let conn;
     try {
       conn = await db.getConnection();
 
-      const query = `SELECT password FROM visitor_comments WHERE visitor_comment_id=?;`;
+      const query = `SELECT * FROM visitor_comments WHERE visitor_comment_id=?;`;
 
-      const [row] = await conn.execute<VisitorPasswordEntity[]>(query, [
+      const [row] = await conn.execute<VisitorCmtEntity[]>(query, [
         visitorCommentId,
       ]);
 
-      return row[0].password;
+      return row[0];
     } catch (error) {
       throw new ServerError('Database Error Occurred');
     }
@@ -115,11 +117,26 @@ class VisitorRepository {
     try {
       conn = await db.getConnection();
 
-      const query = `SELECT visitor_comment_id as id, nickname, description, create_date as date FROM visitor_comments`;
+      const query = `SELECT visitor_comment_id as id, nickname, description, create_date as date FROM visitor_comments;`;
 
       const [row] = await conn.execute<VisitorCmtEntity[]>(query);
 
       return row;
+    } catch (error) {
+      throw new ServerError('Database Error Occurred');
+    }
+  }
+
+  async deleteVisitorCommentById(id: number): Promise<number> {
+    let conn;
+    try {
+      conn = await db.getConnection();
+
+      const query = 'DELETE FROM visitor_comments WHERE visitor_comment_id=?;';
+
+      const [row] = await conn.execute<OkPacket>(query, [id]);
+
+      return row.affectedRows;
     } catch (error) {
       throw new ServerError('Database Error Occurred');
     }

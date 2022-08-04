@@ -73,13 +73,13 @@ const createVisitComment = async (req: Request, res: Response) => {
   } catch (error) {
     if (error instanceof ServerError) {
       console.error(error);
-      return res.status(500).json(error.message);
+      return res.status(500).json({ msg: error.message });
     } else if (error instanceof BadRequestError) {
       console.error(error);
-      return res.status(404).json(error.message);
+      return res.status(404).json({ msg: error.message });
     } else if (error instanceof Error) {
       console.error(error);
-      return res.status(500).json('알 수 없는 에러입니다.');
+      return res.status(500).json({ msg: '알 수 없는 에러입니다.' });
     }
   }
 };
@@ -109,13 +109,13 @@ const updateVisitCommentById = async (req: Request, res: Response) => {
   } catch (error) {
     if (error instanceof ServerError) {
       console.log(error);
-      return res.status(500).json(error.message);
+      return res.status(500).json({ msg: error.message });
     } else if (error instanceof BadRequestError) {
       console.log(error);
-      return res.status(404).json(error.message);
+      return res.status(404).json({ msg: error.message });
     } else {
       console.log(error);
-      return res.status(500).json('알 수 없는 에러입니다.');
+      return res.status(500).json({ msg: '알 수 없는 에러입니다.' });
     }
   }
 };
@@ -130,13 +130,46 @@ const getVisitorComments = async (req: Request, res: Response) => {
   } catch (error) {
     if (error instanceof ServerError) {
       console.log(error);
-      return res.status(500).json(error.message);
+      return res.status(500).json({ msg: error.message });
     } else if (error instanceof BadRequestError) {
       console.log(error);
-      return res.status(404).json(error.message);
+      return res.status(404).json({ msg: error.message });
     } else {
       console.log(error);
-      return res.status(500).json('알 수 없는 에러입니다.');
+      return res.status(500).json({ msg: '알 수 없는 에러입니다.' });
+    }
+  }
+};
+
+const deleteVisitorCommentById = async (req: Request, res: Response) => {
+  try {
+    const visitorCommentId = req.params.id;
+
+    if (!visitorCommentId) throw new BadRequestError('id params is undefined');
+
+    const visitor = new Visitor(new VisitorRepository());
+
+    const response = await visitor.deleteVisitorCommentById(
+      Number(visitorCommentId)
+    );
+
+    if (!response)
+      return res
+        .status(409)
+        .json({ success: false, msg: 'Failed to delete visitor comment' });
+    return res
+      .status(200)
+      .json({ success: true, msg: 'Successful deletion of visitor comment' });
+  } catch (error) {
+    if (error instanceof ServerError) {
+      console.log(error);
+      return res.status(500).json({ msg: error.message });
+    } else if (error instanceof BadRequestError) {
+      console.log(error);
+      return res.status(404).json({ msg: error.message });
+    } else {
+      console.log(error);
+      return res.status(500).json({ msg: '알 수 없는 에러입니다.' });
     }
   }
 };
@@ -147,4 +180,5 @@ export = {
   createVisitComment,
   updateVisitCommentById,
   getVisitorComments,
+  deleteVisitorCommentById,
 };

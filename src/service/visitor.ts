@@ -63,14 +63,15 @@ class Visitor {
   async updateCommentById(visitorCommentId: number): Promise<Response> {
     const { password, description }: VisitorCmtDto = this.body;
 
-    const encryptedPassword =
-      await this.visitorRepository.getVisitorCommentById(visitorCommentId);
+    const visitorComment = await this.visitorRepository.getVisitorCommentById(
+      visitorCommentId
+    );
 
-    if (!encryptedPassword) throw new BadRequestError('No data exists');
+    if (!visitorComment) throw new BadRequestError('No data exists');
 
     const isSamePassword = await this.comparePassword(
       password,
-      encryptedPassword.toString()
+      visitorComment.password
     );
 
     if (!isSamePassword)
@@ -92,6 +93,21 @@ class Visitor {
     const visitorComments = await this.visitorRepository.getVisitorComments();
 
     return { visitorComments };
+  }
+
+  async deleteVisitorCommentById(visitorCommentId: number): Promise<boolean> {
+    const visitorComment = await this.visitorRepository.getVisitorCommentById(
+      visitorCommentId
+    );
+
+    if (!visitorComment) throw new BadRequestError('No data exists');
+
+    const isDelete = await this.visitorRepository.deleteVisitorCommentById(
+      visitorCommentId
+    );
+
+    if (isDelete) return true;
+    return false;
   }
 }
 export default Visitor;
