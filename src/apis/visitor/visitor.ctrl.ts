@@ -4,6 +4,7 @@ import VisitorRepository from '../../model/visitorRepository';
 import { ServerError, BadRequestError } from '../../service/error';
 import { VisitorCmtDtoValidation, UpdateValidation } from './validationCheck';
 import { validate, ValidationError } from 'class-validator';
+import errorResposne from './error';
 
 const getVisitor = async (req: Request, res: Response) => {
   try {
@@ -12,14 +13,8 @@ const getVisitor = async (req: Request, res: Response) => {
     const response = await header.getVisitorCnt();
 
     return res.status(200).json(response);
-  } catch (error) {
-    if (error instanceof ServerError) {
-      console.log(error);
-      return res.status(500).json(error.message);
-    } else {
-      console.log(error);
-      return res.status(500).json('알 수 없는 에러입니다.');
-    }
+  } catch (err) {
+    return errorResposne(err, res);
   }
 };
 
@@ -30,18 +25,12 @@ const updateVisitor = async (req: Request, res: Response) => {
     const response = await visitor.updateVisitorCnt();
 
     if (response) return res.status(200).json({ msg: 'success' });
-  } catch (error) {
-    if (error instanceof ServerError) {
-      console.log(error);
-      return res.status(500).json(error.message);
-    } else {
-      console.log(error);
-      return res.status(500).json('알 수 없는 에러입니다.');
-    }
+  } catch (err) {
+    return errorResposne(err, res);
   }
 };
 
-const createVisitComment = async (req: Request, res: Response) => {
+const createVisitComment = async (req: Request, res: Response, next: any) => {
   const { body } = req;
 
   try {
@@ -70,17 +59,8 @@ const createVisitComment = async (req: Request, res: Response) => {
     return res
       .status(409)
       .json({ success: false, msg: 'Failed to write visitor comment' });
-  } catch (error) {
-    if (error instanceof ServerError) {
-      console.error(error);
-      return res.status(500).json({ msg: error.message });
-    } else if (error instanceof BadRequestError) {
-      console.error(error);
-      return res.status(404).json({ msg: error.message });
-    } else if (error instanceof Error) {
-      console.error(error);
-      return res.status(500).json({ msg: 'Unknown error' });
-    }
+  } catch (err) {
+    return errorResposne(err, res);
   }
 };
 
@@ -106,17 +86,8 @@ const updateVisitCommentById = async (req: Request, res: Response) => {
 
     if (!response.success) return res.status(401).json(response);
     return res.status(200).json(response);
-  } catch (error) {
-    if (error instanceof ServerError) {
-      console.log(error);
-      return res.status(500).json({ msg: error.message });
-    } else if (error instanceof BadRequestError) {
-      console.log(error);
-      return res.status(404).json({ msg: error.message });
-    } else {
-      console.log(error);
-      return res.status(500).json({ msg: 'Unknown error' });
-    }
+  } catch (err) {
+    return errorResposne(err, res);
   }
 };
 
@@ -127,17 +98,8 @@ const getVisitorComments = async (req: Request, res: Response) => {
     const response = await visitor.getVisitorComments();
 
     return res.status(200).json(response);
-  } catch (error) {
-    if (error instanceof ServerError) {
-      console.log(error);
-      return res.status(500).json({ msg: error.message });
-    } else if (error instanceof BadRequestError) {
-      console.log(error);
-      return res.status(404).json({ msg: error.message });
-    } else {
-      console.log(error);
-      return res.status(500).json({ msg: 'Unknown error' });
-    }
+  } catch (err) {
+    return errorResposne(err, res);
   }
 };
 
@@ -160,17 +122,8 @@ const deleteVisitorCommentById = async (req: Request, res: Response) => {
     return res
       .status(200)
       .json({ success: true, msg: 'Successful deletion of visitor comment' });
-  } catch (error) {
-    if (error instanceof ServerError) {
-      console.log(error);
-      return res.status(500).json({ msg: error.message });
-    } else if (error instanceof BadRequestError) {
-      console.log(error);
-      return res.status(404).json({ msg: error.message });
-    } else {
-      console.log(error);
-      return res.status(500).json({ msg: 'Unknown error' });
-    }
+  } catch (err) {
+    return errorResposne(err, res);
   }
 };
 
