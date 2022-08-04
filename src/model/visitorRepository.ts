@@ -1,6 +1,7 @@
-import { OkPacket, ResultSetHeader, RowDataPacket } from 'mysql2';
+import { OkPacket, ResultSetHeader } from 'mysql2';
 import {
   VisitorCmtDto,
+  VisitorCmtEntity,
   VisitorDto,
   VisitorPasswordEntity,
 } from '../apis/visitor/dto';
@@ -71,9 +72,7 @@ class VisitorRepository {
     }
   }
 
-  async getVisitorCommentById(
-    visitorCommentId: number
-  ): Promise<string | Error> {
+  async getVisitorCommentById(visitorCommentId: number): Promise<string> {
     let conn;
     try {
       conn = await db.getConnection();
@@ -93,7 +92,7 @@ class VisitorRepository {
   async updateVisitorComment(
     visitorCommentId: number,
     description: string
-  ): Promise<number | ServerError> {
+  ): Promise<number> {
     let conn;
     try {
       conn = await db.getConnection();
@@ -106,6 +105,21 @@ class VisitorRepository {
       ]);
 
       return row.affectedRows;
+    } catch (error) {
+      throw new ServerError('Database Error Occurred');
+    }
+  }
+
+  async getVisitorComments(): Promise<VisitorCmtEntity[]> {
+    let conn;
+    try {
+      conn = await db.getConnection();
+
+      const query = `SELECT visitor_comment_id as id, nickname, description, create_date as date FROM visitor_comments`;
+
+      const [row] = await conn.execute<VisitorCmtEntity[]>(query);
+
+      return row;
     } catch (error) {
       throw new ServerError('Database Error Occurred');
     }

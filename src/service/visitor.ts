@@ -1,4 +1,4 @@
-import { VisitorCmtDto } from '../apis/visitor/dto';
+import { VisitorCmtDto, VisitorCmtEntity } from '../apis/visitor/dto';
 import VisitorRepository from '../model/visitorRepository';
 import bcrypt from 'bcrypt';
 import { BadRequestError, ServerError } from './error';
@@ -11,7 +11,7 @@ interface Response {
 class Visitor {
   private readonly visitorRepository: VisitorRepository;
   readonly body;
-  constructor(visitorRepository: VisitorRepository, body: any) {
+  constructor(visitorRepository: VisitorRepository, body?: any) {
     this.visitorRepository = visitorRepository;
     this.body = body;
   }
@@ -27,7 +27,7 @@ class Visitor {
     if (visitorCnt) return visitorCnt;
   }
 
-  async createComment() {
+  async createComment(): Promise<boolean> {
     const { body } = this;
     const encryptedPassword = await this.encryptPassword(body.password);
 
@@ -87,8 +87,11 @@ class Visitor {
   private async comparePassword(password: string, encryptedPassword: string) {
     return await bcrypt.compare(password, encryptedPassword);
   }
+
+  async getVisitorComments(): Promise<{ visitorComments: VisitorCmtEntity[] }> {
+    const visitorComments = await this.visitorRepository.getVisitorComments();
+
+    return { visitorComments };
+  }
 }
 export default Visitor;
-function randomBytesPromise(arg0: number) {
-  throw new Error('Function not implemented.');
-}

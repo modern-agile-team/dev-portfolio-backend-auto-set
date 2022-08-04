@@ -11,6 +11,13 @@ export interface VisitorCmtDto {
   date: string;
 }
 
+export interface VisitorCmtEntity extends RowDataPacket {
+  id: number;
+  nickname: string;
+  description: string;
+  date: string;
+}
+
 export interface VisitorPasswordEntity extends RowDataPacket {
   password: string;
 }

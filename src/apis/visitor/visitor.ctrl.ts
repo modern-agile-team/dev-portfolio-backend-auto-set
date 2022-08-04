@@ -120,9 +120,31 @@ const updateVisitCommentById = async (req: Request, res: Response) => {
   }
 };
 
+const getVisitorComments = async (req: Request, res: Response) => {
+  try {
+    const visitor = new Visitor(new VisitorRepository());
+
+    const response = await visitor.getVisitorComments();
+
+    return res.status(200).json(response);
+  } catch (error) {
+    if (error instanceof ServerError) {
+      console.log(error);
+      return res.status(500).json(error.message);
+    } else if (error instanceof BadRequestError) {
+      console.log(error);
+      return res.status(404).json(error.message);
+    } else {
+      console.log(error);
+      return res.status(500).json('알 수 없는 에러입니다.');
+    }
+  }
+};
+
 export = {
   getVisitor,
   updateVisitor,
   createVisitComment,
   updateVisitCommentById,
+  getVisitorComments,
 };
