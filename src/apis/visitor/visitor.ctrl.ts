@@ -56,7 +56,7 @@ const createVisitComment = async (req: Request, res: Response) => {
 
     if (validationError.length > 0) {
       console.log(validationError);
-      throw new BadRequestError('요청 데이터의 형식이 잘못되었습니다.');
+      throw new BadRequestError('The request data is malformed');
     }
 
     const visitor = new Visitor(new VisitorRepository(), body);
@@ -66,10 +66,10 @@ const createVisitComment = async (req: Request, res: Response) => {
     if (response)
       return res
         .status(201)
-        .json({ success: true, msg: '방명록이 작성되었습니다.' });
+        .json({ success: true, msg: 'Successful visitor comment creation' });
     return res
       .status(409)
-      .json({ success: false, msg: '방명록 저장에 실패했습니다.' });
+      .json({ success: false, msg: 'Failed to write visitor comment' });
   } catch (error) {
     if (error instanceof ServerError) {
       console.error(error);
@@ -79,7 +79,7 @@ const createVisitComment = async (req: Request, res: Response) => {
       return res.status(404).json({ msg: error.message });
     } else if (error instanceof Error) {
       console.error(error);
-      return res.status(500).json({ msg: '알 수 없는 에러입니다.' });
+      return res.status(500).json({ msg: 'Unknown error' });
     }
   }
 };
@@ -97,7 +97,7 @@ const updateVisitCommentById = async (req: Request, res: Response) => {
 
     if (validationError.length > 0) {
       console.log(validationError);
-      throw new BadRequestError('요청 데이터의 형식이 잘못되었습니다.');
+      throw new BadRequestError('The request data is malformed');
     }
 
     const visitor = new Visitor(new VisitorRepository(), body);
@@ -115,7 +115,7 @@ const updateVisitCommentById = async (req: Request, res: Response) => {
       return res.status(404).json({ msg: error.message });
     } else {
       console.log(error);
-      return res.status(500).json({ msg: '알 수 없는 에러입니다.' });
+      return res.status(500).json({ msg: 'Unknown error' });
     }
   }
 };
@@ -136,7 +136,7 @@ const getVisitorComments = async (req: Request, res: Response) => {
       return res.status(404).json({ msg: error.message });
     } else {
       console.log(error);
-      return res.status(500).json({ msg: '알 수 없는 에러입니다.' });
+      return res.status(500).json({ msg: 'Unknown error' });
     }
   }
 };
@@ -169,7 +169,7 @@ const deleteVisitorCommentById = async (req: Request, res: Response) => {
       return res.status(404).json({ msg: error.message });
     } else {
       console.log(error);
-      return res.status(500).json({ msg: '알 수 없는 에러입니다.' });
+      return res.status(500).json({ msg: 'Unknown error' });
     }
   }
 };
