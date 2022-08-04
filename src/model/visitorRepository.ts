@@ -1,8 +1,8 @@
-import { OkPacket, ResultSetHeader } from 'mysql2';
+import { OkPacket, ResultSetHeader, RowDataPacket } from 'mysql2';
 import {
   VisitorCmtDto,
-  VisitorCmtEntity,
   VisitorDto,
+  VisitorPasswordEntity,
 } from '../apis/visitor/dto';
 import db from '../config/db';
 import { ServerError } from '../service/error';
@@ -48,7 +48,7 @@ class VisitorRepository {
     password,
     description,
     date,
-  }: VisitorCmtDto) {
+  }: VisitorCmtDto): Promise<number | ServerError> {
     let conn;
     try {
       conn = await db.getConnection();
@@ -68,6 +68,46 @@ class VisitorRepository {
       throw new ServerError('Database Error Occurred');
     } finally {
       conn?.release();
+    }
+  }
+
+  async getVisitorCommentById(
+    visitorCommentId: number
+  ): Promise<string | Error> {
+    let conn;
+    try {
+      conn = await db.getConnection();
+
+      const query = `SELECT password FROM visitor_comments WHERE visitor_comment_id=?;`;
+
+      const [row] = await conn.execute<VisitorPasswordEntity[]>(query, [
+        visitorCommentId,
+      ]);
+
+      return row[0].password;
+    } catch (error) {
+      throw new ServerError('Database Error Occurred');
+    }
+  }
+
+  async updateVisitorComment(
+    visitorCommentId: number,
+    description: string
+  ): Promise<number | ServerError> {
+    let conn;
+    try {
+      conn = await db.getConnection();
+
+      const query = `UPDATE visitor_comments SET description=? WHERE visitor_comment_id=?`;
+
+      const [row] = await conn.execute<OkPacket>(query, [
+        description,
+        visitorCommentId,
+      ]);
+
+      return row.affectedRows;
+    } catch (error) {
+      throw new ServerError('Database Error Occurred');
     }
   }
 }

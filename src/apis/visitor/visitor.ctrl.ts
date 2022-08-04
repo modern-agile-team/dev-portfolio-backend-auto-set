@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Visitor from '../../service/visitor';
 import VisitorRepository from '../../model/visitorRepository';
 import { ServerError, BadRequestError } from '../../service/error';
-import VisitorCmtDtoValidationCheck from './validationCheck';
+import { VisitorCmtDtoValidation, UpdateValidation } from './validationCheck';
 import { validate, ValidationError } from 'class-validator';
 
 const getVisitor = async (req: Request, res: Response) => {
@@ -46,7 +46,7 @@ const createVisitComment = async (req: Request, res: Response) => {
 
   try {
     // validation check 라우터로 분리해줄 예정.
-    const visitorCmt = new VisitorCmtDtoValidationCheck();
+    const visitorCmt = new VisitorCmtDtoValidation();
     visitorCmt.nickname = body.nickname;
     visitorCmt.password = body.password;
     visitorCmt.description = body.description;
@@ -86,10 +86,10 @@ const createVisitComment = async (req: Request, res: Response) => {
 
 const updateVisitCommentById = async (req: Request, res: Response) => {
   const { body } = req;
-  const { id: commentId } = req.params;
+  const { id: visitorCommentId } = req.params;
 
   try {
-    const visitorCmt = new VisitorCmtDtoValidationCheck();
+    const visitorCmt = new UpdateValidation();
     visitorCmt.password = body.password;
     visitorCmt.description = body.description;
 
@@ -101,7 +101,11 @@ const updateVisitCommentById = async (req: Request, res: Response) => {
     }
 
     const visitor = new Visitor(new VisitorRepository(), body);
-    const response = visitor.updateCommentById(Number(commentId));
+
+    const response = await visitor.updateCommentById(Number(visitorCommentId));
+
+    if (!response.success) return res.status(401).json(response);
+    return res.status(200).json(response);
   } catch (error) {
     if (error instanceof ServerError) {
       console.log(error);

@@ -1,7 +1,12 @@
-import { VisitorCmtDto, VisitorCmtEntity } from '../apis/visitor/dto';
+import { VisitorCmtDto } from '../apis/visitor/dto';
 import VisitorRepository from '../model/visitorRepository';
 import bcrypt from 'bcrypt';
-import { ServerError } from './error';
+import { BadRequestError, ServerError } from './error';
+
+interface Response {
+  success: boolean;
+  msg: string;
+}
 
 class Visitor {
   private readonly visitorRepository: VisitorRepository;
@@ -55,8 +60,32 @@ class Visitor {
     }
   }
 
-  async updateCommentById(commentId: number) {
-    const { password, description, date }: VisitorCmtDto = this.body;
+  async updateCommentById(visitorCommentId: number): Promise<Response> {
+    const { password, description }: VisitorCmtDto = this.body;
+
+    const encryptedPassword =
+      await this.visitorRepository.getVisitorCommentById(visitorCommentId);
+
+    if (!encryptedPassword) throw new BadRequestError('No data exists');
+
+    const isSamePassword = await this.comparePassword(
+      password,
+      encryptedPassword.toString()
+    );
+
+    if (!isSamePassword)
+      return { success: false, msg: 'Passwords do not match' };
+
+    await this.visitorRepository.updateVisitorComment(
+      visitorCommentId,
+      description
+    );
+
+    return { success: true, msg: 'Visitor comment update complete' };
+  }
+
+  private async comparePassword(password: string, encryptedPassword: string) {
+    return await bcrypt.compare(password, encryptedPassword);
   }
 }
 export default Visitor;

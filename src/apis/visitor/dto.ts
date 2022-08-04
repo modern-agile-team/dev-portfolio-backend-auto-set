@@ -11,10 +11,6 @@ export interface VisitorCmtDto {
   date: string;
 }
 
-export interface VisitorCmtEntity {
-  nickname: string;
+export interface VisitorPasswordEntity extends RowDataPacket {
   password: string;
-  description: string;
-  date: string;
-  salt: string;
 }
