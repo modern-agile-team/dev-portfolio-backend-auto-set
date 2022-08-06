@@ -3,8 +3,7 @@ import {
   VisitorCmtDto,
   VisitorCmtEntity,
   VisitorDto,
-  VisitorPasswordEntity,
-} from '../apis/visitor/dto';
+} from '../apis/visitor/interface';
 import db from '../config/db';
 import { ServerError } from '../service/error';
 
@@ -57,6 +56,7 @@ class VisitorRepository {
       const query = `
         INSERT INTO visitor_comments (nickname, password, description, create_date) VALUES (?, ?, ?, ?);`;
 
+      console.log(typeof date);
       const [row] = await conn.execute<ResultSetHeader>(query, [
         nickname,
         password,

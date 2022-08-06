@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import Visitor from '../../service/visitor';
 import VisitorRepository from '../../model/visitorRepository';
-import { ServerError, BadRequestError } from '../../service/error';
+import { BadRequestError } from '../../service/error';
 import { VisitorCmtDtoValidation, UpdateValidation } from './validationCheck';
 import { validate, ValidationError } from 'class-validator';
 import errorResposne from './error';

@@ -1,4 +1,4 @@
-import { VisitorCmtDto, VisitorCmtEntity } from '../apis/visitor/dto';
+import { VisitorCmtDto, VisitorCmtEntity } from '../apis/visitor/interface';
 import VisitorRepository from '../model/visitorRepository';
 import bcrypt from 'bcrypt';
 import { BadRequestError, ServerError } from './error';
