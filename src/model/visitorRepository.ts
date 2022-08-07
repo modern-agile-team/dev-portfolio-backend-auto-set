@@ -31,7 +31,7 @@ class VisitorRepository {
       conn = await db.getConnection();
 
       const query =
-        'UPDATE number_of_visitors SET count = count + 1 WHERE visitor_id = ';
+        'UPDATE number_of_visitors SET count = count + 1 WHERE visitor_id = ;';
 
       const [row] = await conn.execute<OkPacket>(query);
 
