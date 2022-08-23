@@ -9,7 +9,6 @@ const swaggerSpec = YAML.load(path.join(__dirname, './swagger.yaml'));
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-import header from './src/apis/header';
 import visitor from './src/apis/visitor';
 
 app.listen(PORT, () => {
