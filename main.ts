@@ -20,6 +20,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/api/visitor', visitor);
+app.use('/apis/visitor', visitor);
 
 export = app;

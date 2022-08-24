@@ -2,6 +2,7 @@ import { VisitorCmtDto, VisitorCmtEntity } from '../apis/visitor/interface';
 import VisitorRepository from '../model/visitorRepository';
 import bcrypt from 'bcrypt';
 import { BadRequestError, ServerError } from './error';
+import moment from 'moment';
 
 interface Response {
   success: boolean;
@@ -22,12 +23,28 @@ class Visitor {
   }
 
   async updateVisitorCnt() {
-    const visitorCnt = await this.visitorRepository.updateVisitorCnt();
+    const todayDate = await this.visitorRepository.getVisitorTodayDate();
+    const formatTodayDate = moment(todayDate, 'YYYY-MM-DD');
+    const reqDate = moment().format('YYYY-MM-DD');
+    let isUpdate;
 
-    if (visitorCnt) return visitorCnt;
+    if (moment(reqDate).diff(moment(formatTodayDate)) > 0) {
+      isUpdate = await this.visitorRepository.updateTodayAndToTalVisitorCnt(
+        reqDate
+      );
+    } else {
+      isUpdate = await this.visitorRepository.updateTodayVisitorCnt();
+    }
+
+    if (isUpdate) {
+      const visitorCnt = await this.getVisitorCnt();
+
+      return visitorCnt;
+    }
+    throw new ServerError('interval server error');
   }
 
-  async createComment(): Promise<boolean> {
+  async createComment(): Promise<number> {
     const { body } = this;
     const encryptedPassword = await this.encryptPassword(body.password);
 
@@ -35,13 +52,14 @@ class Visitor {
       nickname: body.nickname,
       password: encryptedPassword,
       description: body.description,
-      date: body.date,
     };
 
-    const isCreate = await this.visitorRepository.createComment(visitorComment);
+    const commentId = await this.visitorRepository.createComment(
+      visitorComment
+    );
 
-    if (isCreate) return true;
-    return false;
+    if (commentId) return commentId;
+    throw new ServerError('Interver Server Error');
   }
 
   private async encryptPassword(password: string): Promise<string> {
@@ -107,7 +125,7 @@ class Visitor {
     );
 
     if (isDelete) return true;
-    return false;
+    throw new ServerError('Interver Server Error');
   }
 }
 export default Visitor;

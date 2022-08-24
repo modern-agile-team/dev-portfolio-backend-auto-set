@@ -9,9 +9,6 @@ class VisitorCmtDtoValidation {
 
   @Length(1, 250)
   public description!: string;
-
-  @IsDateString()
-  public date!: string;
 }
 
 class UpdateValidation {

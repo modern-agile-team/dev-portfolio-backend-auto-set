@@ -24,7 +24,7 @@ const updateVisitor = async (req: Request, res: Response) => {
 
     const response = await visitor.updateVisitorCnt();
 
-    if (response) return res.status(200).json({ msg: 'success' });
+    if (response) return res.status(200).json({ statusCode: 200, ...response });
   } catch (err) {
     return errorResposne(err, res);
   }
@@ -34,12 +34,10 @@ const createVisitComment = async (req: Request, res: Response, next: any) => {
   const { body } = req;
 
   try {
-    // validation check 라우터로 분리해줄 예정.
     const visitorCmt = new VisitorCmtDtoValidation();
     visitorCmt.nickname = body.nickname;
     visitorCmt.password = body.password;
     visitorCmt.description = body.description;
-    visitorCmt.date = body.date;
 
     const validationError: ValidationError[] = await validate(visitorCmt);
 
@@ -53,12 +51,11 @@ const createVisitComment = async (req: Request, res: Response, next: any) => {
     const response = await visitor.createComment();
 
     if (response)
-      return res
-        .status(201)
-        .json({ success: true, msg: 'Successful visitor comment creation' });
-    return res
-      .status(409)
-      .json({ success: false, msg: 'Failed to write visitor comment' });
+      return res.status(201).json({
+        statusCode: 201,
+        commentId: response,
+        msg: 'Successful visitor comment creation',
+      });
   } catch (err) {
     return errorResposne(err, res);
   }
@@ -84,8 +81,9 @@ const updateVisitCommentById = async (req: Request, res: Response) => {
 
     const response = await visitor.updateCommentById(Number(visitorCommentId));
 
-    if (!response.success) return res.status(401).json(response);
-    return res.status(200).json(response);
+    if (!response.success)
+      return res.status(401).json({ statusCode: 401, msg: response.msg });
+    return res.status(200).json({ statusCode: 200, msg: response.msg });
   } catch (err) {
     return errorResposne(err, res);
   }
@@ -97,7 +95,7 @@ const getVisitorComments = async (req: Request, res: Response) => {
 
     const response = await visitor.getVisitorComments();
 
-    return res.status(200).json(response);
+    return res.status(200).json({ statusCode: 200, ...response });
   } catch (err) {
     return errorResposne(err, res);
   }
@@ -115,13 +113,11 @@ const deleteVisitorCommentById = async (req: Request, res: Response) => {
       Number(visitorCommentId)
     );
 
-    if (!response)
-      return res
-        .status(409)
-        .json({ success: false, msg: 'Failed to delete visitor comment' });
-    return res
-      .status(200)
-      .json({ success: true, msg: 'Successful deletion of visitor comment' });
+    if (response)
+      return res.status(200).json({
+        statusCode: 200,
+        msg: 'Successful deletion of visitor comment',
+      });
   } catch (err) {
     return errorResposne(err, res);
   }

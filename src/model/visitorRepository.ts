@@ -1,4 +1,4 @@
-import { OkPacket, ResultSetHeader } from 'mysql2';
+import { OkPacket, ResultSetHeader, RowDataPacket } from 'mysql2';
 import {
   VisitorCmtDto,
   VisitorCmtEntity,
@@ -8,12 +8,15 @@ import db from '../config/db';
 import { ServerError } from '../service/error';
 
 class VisitorRepository {
-  async getVisitorCnt(): Promise<VisitorDto | Error> {
+  async getVisitorCnt(): Promise<VisitorDto> {
     let conn;
     try {
       conn = await db.getConnection();
 
-      const query = 'SELECT count as visitorCount FROM number_of_visitors';
+      const query = `
+        SELECT today_count AS todayCount, total_count AS totalCount 
+        FROM number_of_visitors 
+        WHERE visitor_id = 1`;
 
       const [rows] = await conn.execute<VisitorDto[]>(query);
 
@@ -25,15 +28,55 @@ class VisitorRepository {
     }
   }
 
-  async updateVisitorCnt(): Promise<number | Error> {
+  async updateTodayVisitorCnt(): Promise<number> {
+    let conn;
+    try {
+      conn = await db.getConnection();
+
+      const query = `
+        UPDATE number_of_visitors 
+        SET today_count = today_count + 1, total_count = total_count + 1 
+        WHERE visitor_id = 1;`;
+
+      const [row] = await conn.execute<OkPacket>(query);
+
+      return row.affectedRows;
+    } catch (error) {
+      throw new ServerError('Database Error Occurred');
+    } finally {
+      conn?.release();
+    }
+  }
+
+  async getVisitorTodayDate() {
     let conn;
     try {
       conn = await db.getConnection();
 
       const query =
-        'UPDATE number_of_visitors SET count = count + 1 WHERE visitor_id = ;';
+        'SELECT today_date AS todayDate FROM number_of_visitors WHERE visitor_id = 1;';
 
-      const [row] = await conn.execute<OkPacket>(query);
+      const [row] = await conn.execute<RowDataPacket[]>(query);
+
+      return row[0].todayDate;
+    } catch (error) {
+      throw new ServerError('Database Error Occurred');
+    } finally {
+      conn?.release();
+    }
+  }
+
+  async updateTodayAndToTalVisitorCnt(todayDate: string) {
+    let conn;
+    try {
+      conn = await db.getConnection();
+
+      const query = `
+        UPDATE number_of_visitors 
+        SET today_count = 1, total_count = total_count + 1, today_date = ?
+        WHERE visitor_id = 1;`;
+
+      const [row] = await conn.execute<OkPacket>(query, [todayDate]);
 
       return row.affectedRows;
     } catch (error) {
@@ -47,24 +90,22 @@ class VisitorRepository {
     nickname,
     password,
     description,
-    date,
-  }: VisitorCmtDto): Promise<number | ServerError> {
+  }: VisitorCmtDto): Promise<number> {
     let conn;
     try {
       conn = await db.getConnection();
 
       const query = `
-        INSERT INTO visitor_comments (nickname, password, description, create_date) VALUES (?, ?, ?, ?);`;
+        INSERT INTO visitor_comments (nickname, password, description) 
+        VALUES (?, ?, ?);`;
 
-      console.log(typeof date);
       const [row] = await conn.execute<ResultSetHeader>(query, [
         nickname,
         password,
         description,
-        date,
       ]);
 
-      return row.affectedRows;
+      return row.insertId;
     } catch (error) {
       throw new ServerError('Database Error Occurred');
     } finally {
@@ -79,7 +120,7 @@ class VisitorRepository {
     try {
       conn = await db.getConnection();
 
-      const query = `SELECT * FROM visitor_comments WHERE visitor_comment_id=?;`;
+      const query = `SELECT * FROM visitor_comments WHERE visitor_comment_id = ?;`;
 
       const [row] = await conn.execute<VisitorCmtEntity[]>(query, [
         visitorCommentId,
@@ -99,7 +140,7 @@ class VisitorRepository {
     try {
       conn = await db.getConnection();
 
-      const query = `UPDATE visitor_comments SET description=? WHERE visitor_comment_id=?`;
+      const query = `UPDATE visitor_comments SET description = ? WHERE visitor_comment_id = ?`;
 
       const [row] = await conn.execute<OkPacket>(query, [
         description,
@@ -117,7 +158,9 @@ class VisitorRepository {
     try {
       conn = await db.getConnection();
 
-      const query = `SELECT visitor_comment_id as id, nickname, description, create_date as date FROM visitor_comments;`;
+      const query = `
+        SELECT visitor_comment_id AS id, nickname, description, DATE_FORMAT(create_date, '%y-%m-%d') AS date 
+        FROM visitor_comments;`;
 
       const [row] = await conn.execute<VisitorCmtEntity[]>(query);
 

@@ -1,14 +1,15 @@
 import { RowDataPacket } from 'mysql2';
 
 export interface VisitorDto extends RowDataPacket {
-  visitorCount: number;
+  todayCount: number;
+  totalCount: number;
+  todayDate: string;
 }
 
 export interface VisitorCmtDto {
   nickname: string;
   password: string;
   description: string;
-  date: string;
 }
 
 export interface VisitorCmtEntity extends RowDataPacket {
