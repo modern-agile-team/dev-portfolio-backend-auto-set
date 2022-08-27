@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "start": "nodemon ./build/main.js",
+    "build": "tsc && cp ./swagger.yaml ./build",
+    "start": "node ./build/main.js",
     "start:dev": "nodemon --exec ts-node ./main.ts",
     "swagger": "swagger-cli bundle ./src/swagger/swagger.yaml --outfile build/swagger.yaml --type yaml"
   },
