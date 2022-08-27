@@ -3,7 +3,6 @@ import visitorCtrl from './visitor.ctrl';
 
 const router: express.Router = express.Router();
 
-router.get('/count', visitorCtrl.getVisitor);
 router.patch('/count', visitorCtrl.updateVisitor);
 
 router.post('/comment', visitorCtrl.createVisitComment);
