@@ -2,7 +2,7 @@ import { Length } from 'class-validator';
 
 class VisitorCmtDtoValidation {
   @Length(0, 20)
-  public nickname!: string;
+  public nickname!: string | undefined;
 
   @Length(4, 20)
   public password!: string;

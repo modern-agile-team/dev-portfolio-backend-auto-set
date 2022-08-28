@@ -34,6 +34,8 @@ const createVisitComment = async (req: Request, res: Response, next: any) => {
       throw new BadRequestError('The request data is malformed');
     }
 
+    if (visitorCmt.nickname?.length === 0) body.nickname = '익명';
+
     const visitor = new Visitor(new VisitorRepository(), body);
 
     const response = await visitor.createComment();
