@@ -1,10 +1,10 @@
-import { IsDateString, Length } from 'class-validator';
+import { Length } from 'class-validator';
 
 class VisitorCmtDtoValidation {
-  @Length(3, 20)
+  @Length(0, 20)
   public nickname!: string;
 
-  @Length(8, 20)
+  @Length(4, 20)
   public password!: string;
 
   @Length(1, 250)
@@ -12,7 +12,7 @@ class VisitorCmtDtoValidation {
 }
 
 class UpdateValidation {
-  @Length(8, 20)
+  @Length(4, 20)
   public password!: string;
 
   @Length(1, 250)
