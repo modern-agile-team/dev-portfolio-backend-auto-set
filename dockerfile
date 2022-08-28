@@ -2,8 +2,8 @@ FROM node:14.5.0
 
 WORKDIR /usr/app
 
-COPY ./tsconfig.json .
-COPY ./package* .
+COPY ./app/tsconfig.json .
+COPY ./app/package* .
 COPY ./build ./build
 
 RUN npm ci --production

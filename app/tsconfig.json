@@ -101,6 +101,6 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "exclude": ["./src/tests/**/*", "./jest.config.js"], // files to exclude
-  "include": ["./src", "./main.ts"] // Build only the files you want
+  "exclude": ["app/src/tests/**/*", "./jest.config.js"], // files to exclude
+  "include": ["app/src", "./main.ts"] // Build only the files you want
 }
