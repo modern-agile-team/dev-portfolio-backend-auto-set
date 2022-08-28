@@ -6,11 +6,11 @@ import { VisitorCmtDtoValidation, UpdateValidation } from './validationCheck';
 import { validate, ValidationError } from 'class-validator';
 import errorResposne from './error';
 
-const updateVisitor = async (req: Request, res: Response) => {
+const updateAndGetVisitor = async (req: Request, res: Response) => {
   try {
     const visitor = new Visitor(new VisitorRepository(), req.body);
 
-    const response = await visitor.updateVisitorCnt();
+    const response = await visitor.updateAndGetVisitorCnt();
 
     if (response) return res.status(200).json({ statusCode: 200, ...response });
   } catch (err) {
@@ -112,7 +112,7 @@ const deleteVisitorCommentById = async (req: Request, res: Response) => {
 };
 
 export = {
-  updateVisitor,
+  updateAndGetVisitor,
   createVisitComment,
   updateVisitCommentById,
   getVisitorComments,

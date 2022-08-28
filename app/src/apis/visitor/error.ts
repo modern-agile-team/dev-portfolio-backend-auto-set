@@ -10,10 +10,10 @@ function errorResposne(
     return res.status(500).json({ statusCode: err.code, msg: err.message });
   } else if (err instanceof BadRequestError) {
     console.error(err);
-    return res.status(404).json({ msg: err.message });
+    return res.status(404).json({ statusCode: err.code, msg: err.message });
   } else {
     console.error(err);
-    return res.status(500).json({ msg: 'Unknown error' });
+    return res.status(500).json({ statusCode: 500, msg: 'Unknown error' });
   }
 }
 

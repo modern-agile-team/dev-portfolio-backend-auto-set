@@ -22,11 +22,11 @@ class Visitor {
     return visitorCnt;
   }
 
-  async updateVisitorCnt() {
+  async updateAndGetVisitorCnt() {
     const todayDate = await this.visitorRepository.getVisitorTodayDate();
     const formatTodayDate = moment(todayDate, 'YYYY-MM-DD');
     const reqDate = moment().format('YYYY-MM-DD');
-    let isUpdate;
+    let isUpdate: number;
 
     if (moment(reqDate).diff(moment(formatTodayDate)) > 0) {
       isUpdate = await this.visitorRepository.updateTodayAndToTalVisitorCnt(
