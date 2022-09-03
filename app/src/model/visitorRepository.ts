@@ -3,7 +3,7 @@ import {
   VisitorCmtDto,
   VisitorCmtEntity,
   VisitorDto,
-} from '../apis/visitor/interface';
+} from '../apis/visitor/visitor';
 import db from '../config/db';
 import { ServerError } from '../service/error';
 
