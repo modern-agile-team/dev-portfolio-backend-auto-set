@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:3000/
 paths:
-  /api/visitor:
+  /apis/visitor:
     get:
       summary: 'Get number of visitors API'
       responses:
@@ -45,7 +45,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
 
-  /api/visitor/comment:
+  /apis/visitor/comments:
     get:
       summary: 'Get comment API'
       responses:
@@ -104,7 +104,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /api/visitor/comment/{id}:
+  /apis/visitor/comment/{id}:
     patch:
       summary: 'Update comment API'
       parameters:
