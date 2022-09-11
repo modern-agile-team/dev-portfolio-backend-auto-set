@@ -4,7 +4,7 @@ info:
   title: 'dev-portfolio API'
   description: 'dev-portfolio API'
 servers:
-  - url: http://localhost:3000/
+  - url: http://localhost:{PORT}/
 paths:
   /apis/visitor:
     get:

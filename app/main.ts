@@ -9,6 +9,11 @@ const swaggerSpec = YAML.load(path.join(__dirname, './swagger.yaml'));
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const portInjectedSwaggerSpec = JSON.stringify(swaggerSpec).replace(
+  '{PORT}',
+  PORT.toString()
+);
+
 import visitor from './src/apis/visitor';
 
 app.listen(PORT, () => {
@@ -18,7 +23,11 @@ app.listen(PORT, () => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(
+  '/swagger',
+  swaggerUi.serve,
+  swaggerUi.setup(YAML.parse(portInjectedSwaggerSpec))
+);
 
 app.use('/apis/visitor', visitor);
 
