@@ -2,13 +2,14 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
-import 'dotenv/config';
+import dotenv from 'dotenv';
 
-const swaggerSpec = YAML.load(path.join(__dirname, './swagger.yaml'));
+dotenv.config({ path: '../../config/.server.env' });
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 
+const swaggerSpec = YAML.load(path.join(__dirname, './swagger.yaml'));
 const portInjectedSwaggerSpec = JSON.stringify(swaggerSpec).replace(
   '{PORT}',
   PORT.toString()
