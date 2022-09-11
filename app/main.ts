@@ -7,7 +7,7 @@ import 'dotenv/config';
 const swaggerSpec = YAML.load(path.join(__dirname, './swagger.yaml'));
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 
 const portInjectedSwaggerSpec = JSON.stringify(swaggerSpec).replace(
   '{PORT}',
