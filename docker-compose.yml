@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   db:
@@ -8,10 +8,14 @@ services:
     ports:
       - ${DB_PORT}:3306
     volumes:
+      - ./.db/etc/my.cnf:/etc/my.cnf
       - ./.db/etc/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
       - ./.db/data:/var/lib/mysql
       - ./.db/initdb.d:/docker-entrypoint-initdb.d
-    env_file: ../config/.docker.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - TZ=Asia/Seoul
     restart: always
 
   nodejs:
@@ -23,6 +27,5 @@ services:
     image: dev-portfolio-nodejs-image
     container_name: dev-portfolio-nodejs-container
     ports:
-      - 8000:8000
-    env_file: ../config/.server.env
+      - ${PORT}:${PORT}
     restart: always
