@@ -1,7 +1,7 @@
 import { VisitorCmtDto, VisitorCmtEntity } from '../apis/visitor/visitor';
 import VisitorRepository from '../model/visitorRepository';
 import bcrypt from 'bcrypt';
-import { BadRequestError, ServerError } from './error';
+import { BadRequestError, NotFoundError, ServerError } from './error';
 import moment from 'moment';
 
 interface Response {
@@ -26,6 +26,7 @@ class Visitor {
     const todayDate = await this.visitorRepository.getVisitorTodayDate();
     const formatTodayDate = moment(todayDate, 'YYYY-MM-DD');
     const reqDate = moment().format('YYYY-MM-DD');
+
     let isUpdate: number;
 
     if (moment(reqDate).diff(moment(formatTodayDate)) > 0) {
@@ -63,19 +64,15 @@ class Visitor {
   }
 
   private async encryptPassword(password: string): Promise<string> {
-    try {
-      const saltRounds = 10;
+    const saltRounds = 10;
 
-      const encryptedPassword = await bcrypt
-        .genSalt(saltRounds)
-        .then((salt: string) => {
-          return bcrypt.hash(password, salt);
-        });
+    const encryptedPassword = await bcrypt
+      .genSalt(saltRounds)
+      .then((salt: string) => {
+        return bcrypt.hash(password, salt);
+      });
 
-      return encryptedPassword;
-    } catch (error) {
-      throw new ServerError('Password encryption failed');
-    }
+    return encryptedPassword;
   }
 
   async updateCommentById(visitorCommentId: number): Promise<Response> {
@@ -85,7 +82,7 @@ class Visitor {
       visitorCommentId
     );
 
-    if (!visitorComment) throw new BadRequestError('No data exists');
+    if (!visitorComment) throw new NotFoundError('No data exists');
 
     const isSamePassword = await this.comparePassword(
       password,
@@ -118,7 +115,7 @@ class Visitor {
       visitorCommentId
     );
 
-    if (!visitorComment) throw new BadRequestError('No data exists');
+    if (!visitorComment) throw new NotFoundError('No data exists');
 
     const isDelete = await this.visitorRepository.deleteVisitorCommentById(
       visitorCommentId
