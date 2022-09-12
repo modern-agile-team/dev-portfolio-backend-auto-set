@@ -4,7 +4,7 @@ WORKDIR /usr/app
 
 COPY ./app/tsconfig.json .
 COPY ./app/package* .
-COPY ./build ./build
+COPY ./app/build ./build
 
 RUN npm ci --production
 
