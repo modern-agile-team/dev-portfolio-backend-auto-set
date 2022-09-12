@@ -3,6 +3,7 @@ import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 import path from 'path';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 dotenv.config({ path: '../../config/.server.env' });
 
@@ -16,6 +17,8 @@ const portInjectedSwaggerSpec = JSON.stringify(swaggerSpec).replace(
 );
 
 import visitor from './src/apis/visitor';
+
+app.use(cors());
 
 app.listen(PORT, () => {
   console.log(`server start at ${PORT}`);
