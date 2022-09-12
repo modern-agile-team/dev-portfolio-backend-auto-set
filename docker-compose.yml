@@ -6,7 +6,7 @@ services:
     platform: linux/amd64
     container_name: dev-portfolio-mysql
     ports:
-      - 3306:3306
+      - ${DB_PORT}:3306
     volumes:
       - ./.db/etc/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
       - ./.db/data:/var/lib/mysql
