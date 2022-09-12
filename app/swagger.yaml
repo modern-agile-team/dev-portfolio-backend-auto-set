@@ -6,9 +6,9 @@ info:
 servers:
   - url: http://localhost:{PORT}/
 paths:
-  /apis/visitor:
-    get:
-      summary: 'Get number of visitors API'
+  /apis/visitor/count:
+    patch:
+      summary: 'Update number of visitors API'
       responses:
         '200':
           descriptoin: 'OK'
@@ -16,38 +16,25 @@ paths:
             application/json:
               schema:
                 properties:
-                  visitorCount:
+                  statusCode:
                     type: number
-                    example: number
+                    example: 200
+                  todayCount:
+                    type: number
+                    example: 4
+                  totalCount:
+                    type: number
+                    example: 4
         '500':
-          descripiton: 'Interval Server Error'
+          descripiton: 'Server Error'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-
-    put:
-      summary: 'Increase in number of visitors API'
-      responses:
-        '200':
-          description: 'OK'
-          content:
-            application/json:
-              schema:
-                properties:
-                  msg:
-                    type: string
-                    example: 'string'
-        '500':
-          descripiton: 'Interval Server Error'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ServerError'
 
   /apis/visitor/comments:
     get:
-      summary: 'Get comment API'
+      summary: 'Get comments API'
       responses:
         '200':
           description: 'OK'
@@ -55,90 +42,143 @@ paths:
             application/json:
               schema:
                 properties:
+                  statusCode:
+                    type: number
+                    example: 200
                   visitorComments:
                     type: array
                     items:
                       type: object
                       properties:
+                        id:
+                          type: number
+                          example: 1
                         nickname:
                           type: string
-                          example: 'string'
+                          example: 'nodeDeveloper'
                         description:
                           type: string
-                          example: 'string'
+                          example: 'the site is nice!'
                         date:
                           type: string
-                          example: 'string'
+                          example: '2022-09-12'
         '500':
-          descripiton: 'Interval Server Error'
+          descripiton: 'Server Error'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ServerError'
+  /apis/visitor/comment:
     post:
       summary: 'Create comment API'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                nickname:
+                  type: string
+                  example: 'nodeDeveloper'
+                password:
+                  type: string
+                  example: '1234'
+                description:
+                  type: string
+                  example: 'hello'
       responses:
         '201':
           description: 'Created'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Result'
-
-        '409':
-          description: 'Conflict'
-          content:
-            applciation/json:
-              schema:
-                $ref: '#/components/schemas/Result'
-
-        '404':
+                properties:
+                  statusCode:
+                    type: number
+                    example: 201
+                  commentId:
+                    type: number
+                    example: 2
+                  msg:
+                    type: string
+                    example: 'Successful visitor comment creation'
+        '400':
           description: 'Bad Request'
           content:
             applciation/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/BadRequestError'
         '500':
-          descripiton: 'Interval Server Error'
+          descripiton: 'Server Error'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ServerError'
   /apis/visitor/comment/{id}:
     patch:
       summary: 'Update comment API'
       parameters:
-        - name: id
-          in: path
+        - in: path
+          name: id
           description: 'visitor comment id'
           required: true
           schema:
-            type: string
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                password:
+                  type: string
+                  example: '1234'
+                description:
+                  type: string
+                  example: 'hello!!!!'
       responses:
         '200':
           description: 'OK'
           content:
             applciation/json:
               schema:
-                $ref: '#/components/schemas/Result'
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                  msg:
+                    type: string
+                    example: 'Visitor comment update complete'
+        '400':
+          description: 'Bad Request'
+          content:
+            applciation/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
         '401':
           description: 'Unauthorized'
           content:
             applciation/json:
               schema:
-                $ref: '#/components/schemas/Result'
+                properties:
+                  statusCode:
+                    type: number
+                    example: 401
+                  msg:
+                    type: string
+                    example: 'Passwords do not match'
         '404':
-          description: 'Bad Request'
+          description: 'Not Found'
           content:
             applciation/json:
               schema:
-                $ref: '#/components/schemas/Result'
+                $ref: '#/components/schemas/NotFoundError'
         '500':
-          description: 'Interval Server Error'
+          description: 'Server Error'
           content:
             applciation/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ServerError'
     delete:
       summary: 'Delete comment API'
       parameters:
@@ -154,40 +194,58 @@ paths:
           content:
             applciation/json:
               schema:
-                $ref: '#/components/schemas/Result'
-        '404':
+                properties:
+                  statusCode:
+                    type: number
+                    example: 200
+                  msg:
+                    type: string
+                    example: 'Successful deletion of visitor comment'
+        '400':
           description: 'Bad Request'
           content:
             applciation/json:
               schema:
-                $ref: '#/components/schemas/Result'
-        '409':
-          description: 'Conflict'
+                $ref: '#/components/schemas/BadRequestError'
+        '404':
+          description: 'Not Found'
           content:
             applciation/json:
               schema:
-                $ref: '#/components/schemas/Result'
+                $ref: '#/components/schemas/NotFoundError'
         '500':
-          description: 'Interval Server Error'
+          description: 'Server Error'
           content:
             applciation/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/ServerError'
 
 components:
   schemas:
-    Error:
+    ServerError:
       type: object
       properties:
+        statusCode:
+          type: number
+          example: 500
         msg:
           type: string
-          example: 'string'
-    Result:
+          example: 'server error message'
+    NotFoundError:
       type: object
       properties:
-        success:
-          type: boolean
-          example: 'boolean'
+        statusCode:
+          type: number
+          example: 404
         msg:
           type: string
-          example: 'string'
+          example: 'No data exists'
+    BadRequestError:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        msg:
+          type: string
+          example: 'error message'
