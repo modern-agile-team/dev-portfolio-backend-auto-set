@@ -28,4 +28,6 @@ services:
     container_name: dev-portfolio-nodejs-container
     ports:
       - ${PORT}:${PORT}
+    env_file:
+      - ../config/.server.env
     restart: always
