@@ -41,7 +41,7 @@ class Visitor {
 
       return visitorCnt;
     }
-    throw new ServerError('interval server error');
+    throw new ServerError('Interval server error');
   }
 
   async createComment(): Promise<number> {
