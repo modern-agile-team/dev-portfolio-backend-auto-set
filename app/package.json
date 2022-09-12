@@ -23,10 +23,12 @@
   "homepage": "https://github.com/modern-agile-team/dev-portfolio-open-api#readme",
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.12",
     "@types/crypto-js": "^4.1.1",
     "ajv-dist": "^8.11.0",
     "bcrypt": "^5.0.1",
     "class-validator": "^0.13.2",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
