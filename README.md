@@ -19,4 +19,5 @@ https://github.com/modern-agile-team/create-dev-portfolio
 </br>
 
 # DB ERD
-<img width="413" alt="스크린샷 2022-10-01 오후 2 44 46" src="https://user-images.githubusercontent.com/79014269/193394712-e1851974-39ea-4643-b1c8-f471f02f98bd.png"
+<img width="413" alt="스크린샷 2022-10-01 오후 2 44 46" src="https://user-images.githubusercontent.com/79014269/193394744-78de5152-3c05-43c3-ba61-16a4344eed84.png">
+
