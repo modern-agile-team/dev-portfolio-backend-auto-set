@@ -14,3 +14,9 @@ Therefore, this server can only operate through [create-dev-portfolio](https://g
 Please go to the link below!
 
 https://github.com/modern-agile-team/create-dev-portfolio
+
+
+</br>
+
+# DB ERD
+<img width="413" alt="스크린샷 2022-10-01 오후 2 44 46" src="https://user-images.githubusercontent.com/79014269/193394712-e1851974-39ea-4643-b1c8-f471f02f98bd.png"
